@@ -1,4 +1,4 @@
-# Ethan's Games
+# Ethan Games
 
 A simple personal game site, deployed to GitHub Pages by GitHub Actions.
 

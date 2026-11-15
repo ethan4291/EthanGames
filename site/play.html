@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Play</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="play">
+  <header class="bar">
+    <a href="./" class="btn">&larr; Games</a>
+    <span id="title" class="title"></span>
+    <button id="fullscreen" class="btn">Fullscreen</button>
+    <a id="newtab" class="btn" target="_blank" rel="noopener">New tab</a>
+  </header>
+  <iframe id="frame" allow="fullscreen; autoplay; gamepad; clipboard-write" allowfullscreen></iframe>
+  <script>
+    const slug = new URLSearchParams(location.search).get("game");
+    const frame = document.getElementById("frame");
+    fetch("games.json")
+      .then((r) => r.json())
+      .then((games) => {
+        const game = games.find((g) => g.slug === slug);
+        if (!game) { document.getElementById("title").textContent = "Game not found"; return; }
+        document.title = game.title;
+        document.getElementById("title").textContent = game.title;
+        document.getElementById("newtab").href = game.url;
+        frame.src = game.url;
+        frame.focus();
+      });
+    document.getElementById("fullscreen").onclick = () => frame.requestFullscreen?.();
+  </script>
+</body>
+</html>

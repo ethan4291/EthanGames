@@ -47,6 +47,23 @@ function hash(s) {
   return h;
 }
 
+// Easter egg: click the title 3 times quickly for a jumpscare
+const logo = document.getElementById("logo");
+const scare = document.getElementById("scare");
+let clicks = 0;
+let clickTimer;
+logo.addEventListener("click", () => {
+  clearTimeout(clickTimer);
+  clickTimer = setTimeout(() => { clicks = 0; }, 1500);
+  if (++clicks < 3) return;
+  clicks = 0;
+  scare.classList.remove("show");
+  void scare.offsetWidth; // restart the animation
+  scare.classList.add("show");
+  setTimeout(() => scare.classList.remove("show"), 1600);
+});
+scare.addEventListener("click", () => scare.classList.remove("show"));
+
 search.addEventListener("input", render);
 fetch("games.json", { cache: "no-store" })
   .then((r) => r.json())

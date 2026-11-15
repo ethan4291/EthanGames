@@ -22,7 +22,28 @@ body {
   padding: 20px 24px;
   border-bottom: 1px solid var(--border);
 }
-.top h1 { margin: 0; font-size: 1.5rem; }
+.top h1 { margin: 0; font-size: 1.5rem; cursor: pointer; user-select: none; }
+
+/* Jumpscare */
+#scare {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  place-items: center;
+  padding: 16px;
+  background: #000;
+  color: #ff1a1a;
+  font: 900 clamp(2.5rem, 12vw, 9rem) / 1 Impact, "Arial Black", sans-serif;
+  text-align: center;
+  text-shadow: 0 0 30px #f00, 0 0 60px #900;
+}
+#scare.show { display: grid; animation: scare-in .15s ease-out, scare-shake .08s linear infinite, scare-flash .2s steps(2) 4; }
+@keyframes scare-in { from { transform: scale(3); } to { transform: scale(1); } }
+@keyframes scare-shake {
+  0% { translate: 0 0; } 25% { translate: -12px 8px; } 50% { translate: 10px -10px; } 75% { translate: -8px -6px; } 100% { translate: 0 0; }
+}
+@keyframes scare-flash { 50% { background: #8b0000; color: #fff; } }
 #search {
   flex: 0 1 320px;
   width: 100%;

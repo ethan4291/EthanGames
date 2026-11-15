@@ -48,7 +48,7 @@ function hash(s) {
 }
 
 search.addEventListener("input", render);
-fetch("games.json")
+fetch("games.json", { cache: "no-store" })
   .then((r) => r.json())
   .then((data) => { games = data; render(); })
   .catch(() => { status.textContent = "Couldn't load games.json"; });

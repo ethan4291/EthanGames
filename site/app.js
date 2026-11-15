@@ -47,7 +47,7 @@ function hash(s) {
   return h;
 }
 
-// Easter egg: click the title 3 times quickly for a jumpscare
+// Easter egg: click the title 5 times quickly for a jumpscare
 const logo = document.getElementById("logo");
 const scare = document.getElementById("scare");
 const staticCanvas = document.getElementById("static");
@@ -59,7 +59,7 @@ let audio;
 logo.addEventListener("click", () => {
   clearTimeout(clickTimer);
   clickTimer = setTimeout(() => { clicks = 0; }, 1500);
-  if (++clicks < 3) return;
+  if (++clicks < 5) return;
   clicks = 0;
   jumpscare();
 });

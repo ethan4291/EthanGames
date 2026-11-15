@@ -16,6 +16,14 @@ fs.mkdirSync(gamesDir, { recursive: true });
 fs.cpSync(gamesDir, path.join(dist, "games"), { recursive: true });
 fs.writeFileSync(path.join(dist, ".nojekyll"), "");
 
+// Cache-bust: make browsers fetch fresh CSS/JS after every deploy
+const version = Date.now().toString(36);
+for (const page of ["index.html", "play.html"]) {
+  const file = path.join(dist, page);
+  const html = fs.readFileSync(file, "utf8").replace(/(href|src)="(style\.css|app\.js)"/g, `$1="$2?v=${version}"`);
+  fs.writeFileSync(file, html);
+}
+
 const titleFromHtml = (file) => {
   const m = fs.readFileSync(file, "utf8").match(/<title[^>]*>([^<]*)<\/title>/i);
   return m && m[1].trim();

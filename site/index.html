@@ -15,35 +15,8 @@
     <p id="status">Loading games...</p>
     <div id="grid" class="grid"></div>
   </main>
-  <div id="scare">
+  <div id="scare" hidden>
     <canvas id="static" width="160" height="90"></canvas>
-    <svg id="monster" viewBox="0 0 400 400" aria-hidden="true">
-      <defs>
-        <radialGradient id="skin" cx="50%" cy="40%" r="60%">
-          <stop offset="0" stop-color="#6b6258"/>
-          <stop offset=".7" stop-color="#2e2924"/>
-          <stop offset="1" stop-color="#0d0b09"/>
-        </radialGradient>
-        <radialGradient id="throat" cx="50%" cy="45%" r="55%">
-          <stop offset="0" stop-color="#000"/>
-          <stop offset=".8" stop-color="#2a0505"/>
-          <stop offset="1" stop-color="#5a0a0a"/>
-        </radialGradient>
-        <clipPath id="mouth"><ellipse cx="200" cy="285" rx="118" ry="84"/></clipPath>
-        <filter id="glow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="4"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-      <path d="M200 18 C300 14 372 88 378 188 C384 292 322 384 200 388 C78 384 16 292 22 188 C28 88 100 22 200 18 Z" fill="url(#skin)"/>
-      <path d="M150 40 L165 95 L150 120 M290 60 L270 110 M60 230 L95 250 L90 290 M330 260 L300 280" stroke="#0d0b09" stroke-width="4" fill="none"/>
-      <ellipse cx="132" cy="150" rx="50" ry="42" fill="#000"/>
-      <ellipse cx="270" cy="146" rx="42" ry="36" fill="#000"/>
-      <circle cx="138" cy="152" r="9" fill="#fff" filter="url(#glow)"/>
-      <circle cx="264" cy="148" r="6" fill="#fff" filter="url(#glow)"/>
-      <ellipse cx="200" cy="285" rx="118" ry="84" fill="url(#throat)"/>
-      <g clip-path="url(#mouth)">
-        <polygon fill="#d8cfae" points="70,190 80,250 98,236 112,284 128,228 144,292 160,222 176,296 192,218 208,300 224,218 240,296 256,222 272,292 288,228 304,284 320,236 330,190"/>
-        <polygon fill="#c9bf9c" points="70,380 80,326 96,338 110,300 126,346 142,294 158,354 174,290 190,358 206,288 222,358 238,290 254,354 270,294 286,346 300,302 316,338 330,380"/>
-      </g>
-    </svg>
     <div id="scare-text">STOP CLICKING ME!</div>
   </div>
   <script src="app.js"></script>

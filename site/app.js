@@ -67,11 +67,12 @@ scare.addEventListener("click", endScare);
 
 function jumpscare() {
   if (scare.classList.contains("show")) return;
+  scare.hidden = false;
   scare.className = "show";
   scream();
   drawStatic();
   scareTimers = [
-    setTimeout(() => scare.classList.add("after"), 1300), // face gone, static + text
+    setTimeout(() => scare.classList.add("after"), 1300), // screech over, static + flicker
     setTimeout(() => scare.classList.add("fade"), 3000),
     setTimeout(endScare, 3500),
   ];
@@ -80,6 +81,7 @@ function jumpscare() {
 function endScare() {
   scareTimers.forEach(clearTimeout);
   scare.className = "";
+  scare.hidden = true;
   if (audio) { audio.close(); audio = null; }
 }
 

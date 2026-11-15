@@ -45,20 +45,10 @@ body {
   opacity: .25;
 }
 #scare.after #static { opacity: .85; }
-#monster {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 100vmin;
-  height: 100vmin;
-  margin: -50vmin 0 0 -50vmin;
-}
-#scare.show #monster { animation: lunge .22s cubic-bezier(.6, 0, 1, 1) forwards, shake .06s linear infinite; }
-#scare.after #monster { display: none; }
 #scare-text {
   position: absolute;
   inset: 0;
-  display: none;
+  display: grid;
   place-items: center;
   padding: 16px;
   color: #ff1a1a;
@@ -66,11 +56,13 @@ body {
   text-align: center;
   text-shadow: 0 0 20px #000, 0 0 40px #f00;
 }
-#scare.after #scare-text { display: grid; animation: shake .08s linear infinite, flicker .15s steps(2) infinite; }
+#scare.show #scare-text { animation: lunge .22s cubic-bezier(.6, 0, 1, 1) forwards, shake .06s linear infinite; }
+#scare.after #scare-text { animation: settle .15s ease-out forwards, shake .08s linear infinite, flicker .15s steps(2) infinite; }
 @keyframes lunge {
-  from { transform: scale(.15); filter: brightness(.2); }
-  to { transform: scale(1.8); filter: brightness(1.1); }
+  from { transform: scale(.1); filter: brightness(.2); }
+  to { transform: scale(1.6); filter: brightness(1.2); }
 }
+@keyframes settle { from { transform: scale(1.6); } to { transform: scale(1); } }
 @keyframes shake {
   0% { translate: 0 0; } 25% { translate: -14px 10px; } 50% { translate: 12px -12px; } 75% { translate: -10px -8px; } 100% { translate: 0 0; }
 }

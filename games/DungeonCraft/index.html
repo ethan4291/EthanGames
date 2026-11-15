@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title></title>
+<style>
+  @font-face {
+    font-family: 'PixelFont';
+    src: url('fonts/PressStart2P.woff2') format('woff2');
+    font-display: block;
+  }
+  /* Press Start 2P is drawn on an 8px grid: keep every size a multiple of 8 so pixels stay crisp.
+     --t body text, --s small text, --h title. Scaled up on big screens. */
+  :root { --t: 16px; --s: 8px; --h: 32px; --gold: #e8c060; --ink: #1a0e06; --dim: #a0907c; --frame: #8a6430; }
+  /* the menu is tall (title, intro, button, eight controls), so the bigger sizes need real height too;
+     itch.io's usual 960x600 embed stays on the smallest size */
+  @media (min-width: 900px) and (min-height: 760px)  { :root { --t: 24px; --s: 16px; --h: 56px; } }
+  @media (min-width: 1700px) and (min-height: 1100px) { :root { --t: 32px; --s: 24px; --h: 88px; } }
+
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #070506; }
+  body { font-family: 'PixelFont', monospace; font-size: var(--t); line-height: 1.6; color: #efe4cf;
+         user-select: none; -webkit-font-smoothing: none; font-smooth: never; }
+  #game { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  /* a crisp one-pixel ink outline all the way round, not a drop shadow */
+  .outline, .ui, #controls { --o: calc(var(--s) / 8);
+    text-shadow: var(--o) 0 0 var(--ink), calc(var(--o) * -1) 0 0 var(--ink), 0 var(--o) 0 var(--ink), 0 calc(var(--o) * -1) 0 var(--ink); }
+  .outline { --o: calc(var(--t) / 8); }
+  /* the HUD shows while you play (and on the death / floor-cleared screens); the crosshair only while you play */
+  body[data-state="menu"] .ui, body[data-state="cine"] .ui, body[data-state="won"] .ui,
+  body:not([data-state="play"]) #crosshair { display: none !important; }
+
+  /* full-screen fade (black for death, white then black for the ending), letterbox bars and title cards */
+  #fade { position: fixed; inset: 0; background: #000; opacity: 0; pointer-events: none; }
+  #bars::before, #bars::after { content: ''; position: fixed; left: 0; right: 0; height: 0; background: #000;
+    transition: height 1.2s ease; pointer-events: none; z-index: 1; }
+  #bars::before { top: 0; } #bars::after { bottom: 0; }
+  body[data-state="cine"] #bars::before, body[data-state="cine"] #bars::after { height: 11vh; }
+  #cards { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+           gap: var(--t); text-align: center; pointer-events: none; z-index: 2; }
+  #cards div { opacity: 0; color: #efe4cf; }
+  #cards div:first-child { font-size: var(--h); color: var(--gold); letter-spacing: .06em; margin-bottom: var(--t);
+    text-shadow: 0 0 calc(var(--h) / 2) rgba(255, 130, 40, .45); }
+  #skip { position: fixed; right: var(--t); bottom: calc(11vh + var(--s)); font-size: var(--s); color: var(--dim);
+          pointer-events: none; display: none; z-index: 2; }
+  body[data-state="cine"] #skip { display: block; }
+
+  /* a small plus; snaps into an X on a hit (red on a headshot) */
+  #crosshair { position: fixed; left: 50%; top: 50%; width: 0; height: 0; pointer-events: none; transition: transform .08s; }
+  #crosshair::before, #crosshair::after { content: ''; position: absolute; background: rgba(255, 255, 255, .7);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .45); }
+  #crosshair::before { left: -1px; top: -8px; width: 2px; height: 16px; }
+  #crosshair::after { left: -8px; top: -1px; width: 16px; height: 2px; }
+  #crosshair.hit { transform: rotate(45deg) scale(1.3); }
+  #crosshair.hit::before, #crosshair.hit::after { background: #fff; }
+  #crosshair.head::before, #crosshair.head::after { background: #ff5a3a; }
+
+  #hud { position: fixed; left: var(--t); top: var(--t); pointer-events: none; font-size: var(--s); color: var(--dim); }
+  #hudlvl { color: var(--gold); margin-bottom: calc(var(--s) / 2); }
+  #hudstats span { margin-right: calc(var(--t) * 1.25); }
+
+  .bar { position: relative; height: var(--s); background: #1a0e06;
+         box-shadow: 0 0 0 calc(var(--s) / 4) var(--ink), inset 0 0 0 calc(var(--s) / 8) rgba(138, 100, 48, .7); }
+  .fill { position: absolute; left: 0; top: 0; bottom: 0; transition: width .15s; }
+  #vitals { position: fixed; left: var(--t); bottom: var(--t); display: flex; align-items: center; gap: var(--s);
+            pointer-events: none; font-size: var(--s); color: var(--dim); }
+  #vitals .bar { width: calc(var(--t) * 10); }
+  #hpfill { background: linear-gradient(#e0584a, #9a2a1e); }
+  #vitals.low #hpfill { animation: blink .5s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: .45; } }
+  #hpnum { color: #efe4cf; }
+  #ammo { position: fixed; right: var(--t); bottom: var(--t); text-align: right; pointer-events: none; }
+  #ammonum { display: block; font-size: var(--t); }
+  #ammolbl { display: block; font-size: var(--s); color: var(--gold); min-height: 1.6em; }
+  /* below the two HUD lines, so a long floor name never runs into it */
+  #boss { position: fixed; top: calc(var(--t) + var(--s) * 4.5); left: 50%; transform: translateX(-50%); text-align: center; display: none;
+          font-size: var(--s); color: #ff9a50; pointer-events: none; }
+  #boss .bar { width: min(60vw, calc(var(--t) * 24)); margin-top: calc(var(--s) / 2); }
+  #bossfill { background: linear-gradient(#ff8a3a, #b0301a); }
+
+  #message { position: fixed; left: 0; right: 0; top: 26%; text-align: center; white-space: pre-line; pointer-events: none;
+             opacity: 0; transition: opacity .5s; color: var(--gold); }
+  #flash { position: fixed; inset: 0; background: radial-gradient(ellipse at center, rgba(160, 28, 16, .2) 20%, #a01c10 100%);
+           opacity: 0; pointer-events: none; transition: opacity .6s; }
+
+  #overlay { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+             gap: var(--t); cursor: pointer; text-align: center; overflow-y: auto; justify-content: safe center;
+             padding: var(--t) 0; box-sizing: border-box;
+             background: radial-gradient(ellipse at center, rgba(28, 16, 10, .55) 0%, rgba(6, 4, 5, .94) 72%);
+             backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+  #title { margin: 0; font-size: var(--h); font-weight: normal; line-height: 1.2; color: var(--gold); letter-spacing: .06em;
+           --o: calc(var(--h) / 16);
+           text-shadow: var(--o) 0 0 var(--ink), calc(var(--o) * -1) 0 0 var(--ink), 0 var(--o) 0 var(--ink),
+                        0 calc(var(--o) * -1) 0 var(--ink), 0 0 calc(var(--h) / 2) rgba(255, 130, 40, .45); }
+  #status { white-space: pre-line; max-width: 90vw; }
+  /* pixel window frame: notched corners, gold rim */
+  #playbtn, #controls { --n: calc(var(--s) / 2);
+    clip-path: polygon(var(--n) 0, calc(100% - var(--n)) 0, 100% var(--n), 100% calc(100% - var(--n)),
+                       calc(100% - var(--n)) 100%, var(--n) 100%, 0 calc(100% - var(--n)), 0 var(--n)); }
+  #playbtn { margin: calc(var(--t) / 2) 0; padding: var(--t) calc(var(--t) * 1.5); color: var(--gold);
+             background: #24160c; box-shadow: inset 0 0 0 calc(var(--s) / 4) var(--frame), inset 0 0 0 calc(var(--s) / 2) var(--ink); }
+  #playbtn:hover { background: #3a2412; color: #fff2c8; }
+  #controls { display: grid; grid-template-columns: auto auto; gap: calc(var(--s) * .75) var(--t);
+              padding: var(--t) calc(var(--t) * 1.25); font-size: var(--s); background: rgba(14, 9, 6, .7);
+              box-shadow: inset 0 0 0 calc(var(--s) / 4) rgba(138, 100, 48, .5); }
+  #controls .key { text-align: right; color: var(--gold); }
+  #controls .act { text-align: left; color: var(--dim); }
+</style>
+</head>
+<body data-state="menu">
+<canvas id="game"></canvas>
+<div id="crosshair"></div>
+<div id="hud" class="ui"><div id="hudlvl"></div><div id="hudstats"></div></div>
+<div id="boss" class="ui"><div id="bossname"></div><div class="bar"><div id="bossfill" class="fill"></div></div></div>
+<div id="vitals" class="ui"><span id="hplbl"></span><div class="bar"><div id="hpfill" class="fill"></div></div><span id="hpnum"></span></div>
+<div id="ammo" class="ui"><span id="ammonum"></span><span id="ammolbl"></span></div>
+<div id="message" class="outline"></div>
+<div id="flash"></div>
+<div id="fade"></div>
+<div id="bars"></div>
+<div id="cards" class="outline"></div>
+<div id="skip" class="outline"></div>
+<div id="overlay">
+  <h1 id="title"></h1>
+  <div id="status" class="outline"></div>
+  <div id="playbtn" class="outline" style="display:none"></div>
+  <div id="controls"></div>
+</div>
+<script src="main.js"></script>
+</body>
+</html>

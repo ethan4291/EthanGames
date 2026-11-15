@@ -51,7 +51,10 @@
   "comfort": {
     "fov": "Field of view",
     "sens": "Mouse speed",
+    "bright": "Brightness",
+    "vol": "Volume",
     "motion": "Camera effects",
+    "reset": "Reset settings",
     "on": "On",
     "off": "Off"
   },

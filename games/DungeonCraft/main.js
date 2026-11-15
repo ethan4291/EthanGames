@@ -468,6 +468,7 @@ function compile(vs, fs) {
 // and the final grade (highlight shoulder, cool shadows, fog, vignette, dither)
 const SHADER_COMMON = `
 uniform vec2 uRes;
+uniform float uBright;
 uniform vec4 uPts[8]; uniform vec3 uPtC[8]; uniform int uPtsN;
 const vec3 FOG = vec3(0.016, 0.012, 0.018);
 float lum(vec3 c){ return dot(c, vec3(0.299, 0.587, 0.114)); }
@@ -485,6 +486,8 @@ vec3 grade(vec3 col, float d){
   col *= 1.25;
   col = col * (1.0 + col * 0.25) / (1.0 + col);
   col = mix(col, col * vec3(0.82, 0.92, 1.18), (1.0 - smoothstep(0.0, 0.2, lum(col))) * 0.7);
+  // the brightness setting: a gamma lift, so it opens up the shadows without blowing out torches and lava
+  col = pow(max(col, 0.0), vec3(1.0 / uBright));
   float fog = 1.0 - exp(-pow(d / 30.0, 2.0));
   col = mix(col, FOG, clamp(fog, 0.0, 1.0));
   vec2 sp = gl_FragCoord.xy / uRes - 0.5; sp.x *= uRes.x / uRes.y;
@@ -969,8 +972,10 @@ const bossAlive = () => !!boss && !boss.dead;
 const keys = {};
 // a steady, fairly wide view: no head bob, no sprint zoom, no screen shake; all big motion-sickness triggers.
 // Comfort settings, kept between visits: field of view, mouse speed, and camera effects (gun sway, the roll as you
-// die, the sweeping ending shot, strong damage flashes), which are off unless you turn them on
-const OPT = { fov: 90, sens: 8, motion: false };
+// die, the sweeping ending shot, strong damage flashes), which are off unless you turn them on; brightness and
+// volume, both in percent
+const OPT_DEFAULT = { fov: 90, sens: 8, motion: false, bright: 100, vol: 80 };
+const OPT = { ...OPT_DEFAULT };
 try { Object.assign(OPT, JSON.parse(localStorage.getItem('dungeoncraft.opts') || '{}')); } catch (e) { /* private mode */ }
 function saveOpts() { try { localStorage.setItem('dungeoncraft.opts', JSON.stringify(OPT)); } catch (e) { /* private mode */ } }
 let lastWTap = 0, stepDist = 0;
@@ -1701,7 +1706,7 @@ function loadLevel(n) {
   computeLight();
   buildAllChunks();
   collectFlames();
-  enemies = []; fireballs = []; particles = []; pools = []; blasts = []; acidT = 0; boss = null;
+  enemies = []; fireballs = []; particles = []; pools = []; blasts = []; acidT = 0; boss = null; portalBoost = 0;
   pickups =healthSpots.map(([x, z]) => ({ x: x + 0.5, y: FY + 1.6, z: z + 0.5, t: rand() * 6, hp: 25 }));
   spawnEnemies(cfg);
   respawn();
@@ -1713,9 +1718,40 @@ function loadLevel(n) {
   fresh = true;
   updateHud();
 }
+// Floor transitions, so nothing snaps:
+//  - stepping into the portal: the camera holds still while the portal flares and the screen washes to its light,
+//    then down to black, and only then does the floor-cleared panel fade up
+//  - leaving a panel (start, descend, retry): the panel fades away over black, the next floor is built while the
+//    screen is dark, then the dungeon fades in
+const WARP = { flare: 0.9, black: 1.5 }, ENTER = 0.35, FADE_IN = 0.9;
+let warpT = 0, enterT = 0, enterFrom = 0, enterJob = null, fadeInT = 0;
+function updateWarp(dt) {
+  warpT += dt;
+  portalBoost = ease(warpT / WARP.flare);
+  if (warpT < WARP.flare) {
+    fadeEl.style.background = '#e8d8ff';
+    fadeEl.style.opacity = 0.9 * ease(warpT / WARP.flare);
+  } else {
+    const k = ease((warpT - WARP.flare) / (WARP.black - WARP.flare));
+    fadeEl.style.background = `rgb(${Math.round(lerp(232, 0, k))},${Math.round(lerp(216, 0, k))},${Math.round(lerp(255, 0, k))})`;
+    fadeEl.style.opacity = lerp(0.9, 1, k);
+  }
+  if (warpT >= WARP.black) { setState('done'); endRun(); }
+}
+function enterFloor(job) {
+  setState('enter'); enterJob = job; enterT = 0;
+  enterFrom = parseFloat(fadeEl.style.opacity) || 0;
+  fadeEl.style.background = '#000';
+  updateOverlay();
+}
+function updateEnter(dt) {
+  enterT += dt;
+  fadeEl.style.opacity = lerp(enterFrom, 1, ease(enterT / ENTER));
+  if (enterT >= ENTER && enterJob) { const job = enterJob; enterJob = null; job(); }
+}
 function beginLevel() {
   setState('play'); fresh = false;
-  fadeEl.style.opacity = 0;
+  fadeEl.style.background = '#000'; fadeEl.style.opacity = 1; fadeInT = FADE_IN;
   const name = TEXT.levelNames[level], newcomers = newKinds(level);
   let intro = fmt(LEVELS[level].boss ? TEXT.bossIntro : TEXT.levelIntro, { n: level + 1, name });
   if (newcomers.length) intro += '\n\n' + fmt(TEXT.newFoes, { names: newcomers.map(t => TEXT.enemyNames[t]).join(', ') });
@@ -1725,9 +1761,11 @@ function beginLevel() {
 }
 function completeLevel() {
   if (level === LEVELS.length - 1) { startCutscene(); return; }
-  sfx('portal');
-  setState('done');
-  endRun();
+  sfx('portal'); sfx('warp');
+  setState('warp'); warpT = 0;
+  mouseDown = false;
+  for (const k in keys) keys[k] = false;
+  msgEl.style.opacity = 0;
 }
 // stop play and show the overlay for the current state
 function endRun() {
@@ -1794,27 +1832,35 @@ function buildComfort() {
     box.append(l, ctl);
     if (val) box.append(val); else box.append(document.createElement('div'));
   };
-  const slider = (label, key, min, max, show) => {
+  const slider = (label, key, min, max, show, apply) => {
     const inp = document.createElement('input'); inp.type = 'range'; inp.min = min; inp.max = max; inp.step = 1; inp.value = OPT[key];
     const v = document.createElement('div'); v.className = 'val'; v.textContent = show(OPT[key]);
-    inp.addEventListener('input', () => { OPT[key] = +inp.value; v.textContent = show(OPT[key]); saveOpts(); });
+    inp.addEventListener('input', () => { OPT[key] = +inp.value; v.textContent = show(OPT[key]); saveOpts(); if (apply) apply(); });
     row(label, inp, v);
+    return inp;
   };
   slider(C.fov, 'fov', 70, 110, n => n + '°');
   slider(C.sens, 'sens', 1, 20, n => String(n));
+  slider(C.bright, 'bright', 50, 150, n => n + '%');
+  slider(C.vol, 'vol', 0, 100, n => n + '%', setVolume)
+    .addEventListener('change', () => { audio(); sfx('coins'); }); // a sample of the new level once you let go
   const tog = document.createElement('div'); tog.className = 'tog';
   const show = () => { tog.textContent = OPT.motion ? C.on : C.off; };
   tog.addEventListener('click', () => { OPT.motion = !OPT.motion; show(); saveOpts(); });
   show();
   row(C.motion, tog);
+  // put everything back as it was out of the box, and redraw the panel to match
+  const reset = document.createElement('div'); reset.className = 'tog reset'; reset.textContent = C.reset;
+  reset.addEventListener('click', () => { Object.assign(OPT, OPT_DEFAULT); saveOpts(); setVolume(); buildComfort(); });
+  box.append(reset);
 }
 // clicks on the settings must not count as "click to play"
 for (const ev of ['click', 'mousedown', 'pointerdown']) $('comfort').addEventListener(ev, e => e.stopPropagation());
 let overlayGuard = 0;
 function updateOverlay() {
   const overlay = $('overlay'), btn = $('playbtn');
-  const hidden = (state === 'play' && locked) || state === 'dying' || state === 'cine';
-  overlay.style.display = hidden ? 'none' : 'flex';
+  const hidden = (state === 'play' && locked) || state === 'dying' || state === 'cine' || state === 'warp' || state === 'enter';
+  overlay.classList.toggle('hidden', hidden); // fades, see the CSS
   if (!ready || hidden) return;
   const name = TEXT.levelNames[level], n = level + 1;
   const stats = { n, name, kills, gold, time: mmss(state === 'won' ? totalTime : levelTime) };
@@ -1830,10 +1876,13 @@ function updateOverlay() {
 }
 
 // audio (procedural)
-let AC = null, noiseBuf = null, VOL = 1;
+let AC = null, noiseBuf = null, VOL = 1, master = null;
+// every sound runs through one master gain, which the volume slider sets
+function setVolume() { if (master) master.gain.setTargetAtTime((OPT.vol / 100) ** 2, AC.currentTime, 0.03); }
 function audio() {
   if (!AC) {
     AC = new (window.AudioContext || window.webkitAudioContext)();
+    master = AC.createGain(); master.gain.value = (OPT.vol / 100) ** 2; master.connect(AC.destination);
     noiseBuf = AC.createBuffer(1, AC.sampleRate, AC.sampleRate);
     const d = noiseBuf.getChannelData(0);
     for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
@@ -1849,7 +1898,7 @@ function noise(dur, freq, gain, type = 'bandpass', q = 1, delay = 0) {
   const f = ac.createBiquadFilter(); f.type = type; f.frequency.value = freq; f.Q.value = q;
   const g = ac.createGain();
   g.gain.setValueAtTime(gain * VOL, t); g.gain.exponentialRampToValueAtTime(0.001, t + dur);
-  src.connect(f).connect(g).connect(ac.destination);
+  src.connect(f).connect(g).connect(master);
   src.start(t, Math.random() * 0.5); src.stop(t + dur + 0.05);
 }
 function tone(freq, dur, gain, type = 'triangle', delay = 0, slide = 0) {
@@ -1858,7 +1907,7 @@ function tone(freq, dur, gain, type = 'triangle', delay = 0, slide = 0) {
   if (slide) o.frequency.exponentialRampToValueAtTime(freq * slide, t + dur);
   const g = ac.createGain();
   g.gain.setValueAtTime(gain * VOL, t); g.gain.exponentialRampToValueAtTime(0.001, t + dur);
-  o.connect(g).connect(ac.destination); o.start(t); o.stop(t + dur + 0.05);
+  o.connect(g).connect(master); o.start(t); o.stop(t + dur + 0.05);
 }
 // mat: a material name for footsteps, or a pitch multiplier for creature sounds; vol falls off with distance
 function sfx(name, mat = 'stone', vol = 1) {
@@ -1904,16 +1953,17 @@ function sfx(name, mat = 'stone', vol = 1) {
     case 'snort': noise(0.35, 420 * p, 0.25, 'bandpass', 1.5); noise(0.3, 380 * p, 0.2, 'bandpass', 1.5, 0.4); break;
     case 'rush': tone(90 * p, 0.6, 0.1, 'sawtooth', 0, 1.6); noise(0.6, 300, 0.25, 'lowpass'); break;
     case 'blink': tone(1500, 0.25, 0.04, 'sine', 0, 0.3); noise(0.2, 5000, 0.06, 'highpass'); break;
+    case 'warp': tone(220, 1.4, 0.05, 'sine', 0, 4); tone(330, 1.4, 0.035, 'triangle', 0.05, 4); noise(1.4, 1800, 0.08, 'bandpass', 0.7); break;
     case 'raise': tone(110, 1.0, 0.06, 'triangle', 0, 2); tone(165, 1.0, 0.04, 'sine', 0.1, 2); noise(0.8, 300, 0.12, 'lowpass'); break;
   }
 }
 function startAmbience() {
-  const ac = AC, g = ac.createGain(); g.gain.value = 0.035; g.connect(ac.destination);
+  const ac = AC, g = ac.createGain(); g.gain.value = 0.035; g.connect(master);
   for (const f of [55, 55.7, 82.4]) { const o = ac.createOscillator(); o.frequency.value = f; o.connect(g); o.start(); }
   const src = ac.createBufferSource(); src.buffer = noiseBuf; src.loop = true;
   const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 240;
   const ng = ac.createGain(); ng.gain.value = 0.05;
-  src.connect(lp).connect(ng).connect(ac.destination); src.start();
+  src.connect(lp).connect(ng).connect(master); src.start();
 }
 
 // input
@@ -1929,12 +1979,12 @@ function lock() {
 $('overlay').addEventListener('click', () => {
   if (!ready || performance.now() < overlayGuard) return;
   audio();
-  if (state === 'dying' || state === 'cine') return;
+  if (state === 'dying' || state === 'cine' || state === 'warp' || state === 'enter') return;
   lock();
-  if (state === 'menu') { if (!fresh) loadLevel(START_LEVEL); beginLevel(); }
-  else if (state === 'done') { loadLevel(level + 1); beginLevel(); }
-  else if (state === 'dead') { gold = levelStart.gold; kills = levelStart.kills; loadLevel(level); beginLevel(); }
-  else if (state === 'won') { gold = 0; kills = 0; totalTime = 0; loadLevel(0); beginLevel(); }
+  if (state === 'menu') enterFloor(() => { if (!fresh) loadLevel(START_LEVEL); beginLevel(); });
+  else if (state === 'done') enterFloor(() => { loadLevel(level + 1); beginLevel(); });
+  else if (state === 'dead') enterFloor(() => { gold = levelStart.gold; kills = levelStart.kills; loadLevel(level); beginLevel(); });
+  else if (state === 'won') enterFloor(() => { gold = 0; kills = 0; totalTime = 0; loadLevel(0); beginLevel(); });
 });
 document.addEventListener('pointerlockchange', () => {
   locked = document.pointerLockElement === canvas;
@@ -2431,6 +2481,7 @@ function render() {
   gl.uniform1f(U.uLava, T.lava);
   gl.uniform1f(U.uTorch, T.torch);
   gl.uniform2f(U.uRes, canvas.width, canvas.height);
+  gl.uniform1f(U.uBright, OPT.bright / 100);
   setLights(U, lights);
   for (const m of chunkMeshes) {
     if (!m || !m.count) continue;
@@ -2443,6 +2494,7 @@ function render() {
   const EU = entProg.u;
   gl.useProgram(entProg.p);
   gl.uniform2f(EU.uRes, canvas.width, canvas.height);
+  gl.uniform1f(EU.uBright, OPT.bright / 100);
   if (EM.i.length) {
     gl.uniformMatrix4fv(EU.uMVP, false, vp);
     gl.uniform3fv(EU.uCam, cam);
@@ -2530,6 +2582,9 @@ let last = performance.now();
 function frame(now) {
   const dt = Math.min((now - last) / 1000, 0.05);
   last = now; time += dt;
+  if (state === 'warp') updateWarp(dt);
+  else if (state === 'enter') updateEnter(dt);
+  if (fadeInT > 0 && state === 'play') { fadeInT = Math.max(0, fadeInT - dt); fadeEl.style.opacity = ease(fadeInT / FADE_IN); }
   if ((state === 'play' && locked) || state === 'dying' || state === 'cine') {
     if (state === 'play') { levelTime += dt; totalTime += dt; }
     else if (state === 'dying') updateDeath(dt);

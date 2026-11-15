@@ -92,21 +92,31 @@ let gold = 0;
 let spawn = { x: 40.5, y: 4, z: 40.5 };
 let healthSpots = []; // [x, z] cells where a health crystal floats when the floor starts
 
-// the ten floors
+// the twenty floors
 // mix: the share of each creature on the floor. Every kind listed is guaranteed to appear at least once (see
-// rosterFor), so even the first floor has three kinds. Every floor is one storey of rooms; the last ends in the
-// Ember Lord's arena.
+// rosterFor), so even the first floor has three kinds. Each floor leans on a different few, so no two feel the same.
+// Every floor is one storey of rooms; the last ends in the Ember Lord's arena.
 const LEVELS = [
   { rooms: 5, enemies: 7, mix: [['ghoul', 0.55], ['bat', 0.3], ['bloater', 0.15]], dark: 0.1 },
   { rooms: 5, enemies: 9, mix: [['ghoul', 0.4], ['bat', 0.25], ['cultist', 0.2], ['bloater', 0.15]], dark: 0.1 },
   { rooms: 6, enemies: 11, mix: [['ghoul', 0.3], ['cultist', 0.2], ['spitter', 0.2], ['bat', 0.15], ['bloater', 0.15]], dark: 0.15 },
   { rooms: 6, enemies: 12, mix: [['ghoul', 0.25], ['warden', 0.2], ['spitter', 0.2], ['cultist', 0.15], ['bat', 0.1], ['bloater', 0.1]], dark: 0.15 },
   { rooms: 7, enemies: 14, mix: [['ghoul', 0.2], ['brute', 0.15], ['warden', 0.15], ['cultist', 0.15], ['spitter', 0.15], ['bat', 0.1], ['bloater', 0.1]], dark: 0.2 },
-  { rooms: 7, enemies: 15, mix: [['bat', 0.3], ['ghoul', 0.2], ['bloater', 0.15], ['spitter', 0.15], ['brute', 0.1], ['warden', 0.1]], dark: 0.4 },
-  { rooms: 8, enemies: 17, mix: [['warden', 0.2], ['ghoul', 0.2], ['cultist', 0.15], ['brute', 0.15], ['spitter', 0.1], ['bloater', 0.1], ['bat', 0.1]], dark: 0.25 },
-  { rooms: 8, enemies: 19, mix: [['cultist', 0.2], ['brute', 0.2], ['spitter', 0.15], ['warden', 0.15], ['ghoul', 0.1], ['bloater', 0.1], ['bat', 0.1]], dark: 0.3 },
-  { rooms: 9, enemies: 21, mix: [['brute', 0.2], ['warden', 0.2], ['cultist', 0.15], ['spitter', 0.15], ['bloater', 0.1], ['bat', 0.1], ['ghoul', 0.1]], dark: 0.35 },
-  { rooms: 7, enemies: 12, mix: [['ghoul', 0.25], ['cultist', 0.2], ['warden', 0.15], ['spitter', 0.15], ['brute', 0.1], ['bat', 0.1], ['bloater', 0.05]], dark: 0.2, boss: true },
+  { rooms: 7, enemies: 14, mix: [['ghoul', 0.25], ['gorehorn', 0.2], ['bat', 0.2], ['bloater', 0.15], ['spitter', 0.1], ['cultist', 0.1]], dark: 0.25 },
+  { rooms: 7, enemies: 15, mix: [['bat', 0.3], ['ghoul', 0.2], ['gorehorn', 0.15], ['bloater', 0.15], ['spitter', 0.1], ['brute', 0.1]], dark: 0.4 },
+  { rooms: 8, enemies: 16, mix: [['warden', 0.2], ['ghoul', 0.2], ['cultist', 0.15], ['brute', 0.15], ['gorehorn', 0.1], ['spitter', 0.1], ['bat', 0.1]], dark: 0.25 },
+  { rooms: 8, enemies: 16, mix: [['shade', 0.25], ['cultist', 0.2], ['ghoul', 0.2], ['bat', 0.15], ['warden', 0.1], ['bloater', 0.1]], dark: 0.35 },
+  { rooms: 8, enemies: 17, mix: [['brute', 0.2], ['warden', 0.2], ['shade', 0.15], ['gorehorn', 0.15], ['spitter', 0.15], ['bloater', 0.15]], dark: 0.25 },
+  { rooms: 9, enemies: 18, mix: [['shade', 0.2], ['ghoul', 0.2], ['bat', 0.2], ['spitter', 0.15], ['cultist', 0.15], ['bloater', 0.1]], dark: 0.45 },
+  { rooms: 9, enemies: 18, mix: [['ghoul', 0.3], ['gravecaller', 0.15], ['cultist', 0.15], ['warden', 0.15], ['shade', 0.15], ['bat', 0.1]], dark: 0.3 },
+  { rooms: 9, enemies: 19, mix: [['gorehorn', 0.25], ['brute', 0.2], ['bloater', 0.2], ['spitter', 0.15], ['bat', 0.1], ['warden', 0.1]], dark: 0.3 },
+  { rooms: 10, enemies: 20, mix: [['shade', 0.2], ['cultist', 0.2], ['ghoul', 0.2], ['gravecaller', 0.15], ['bat', 0.15], ['bloater', 0.1]], dark: 0.4 },
+  { rooms: 10, enemies: 21, mix: [['warden', 0.2], ['gorehorn', 0.2], ['brute', 0.15], ['spitter', 0.15], ['gravecaller', 0.1], ['cultist', 0.1], ['shade', 0.1]], dark: 0.3 },
+  { rooms: 10, enemies: 22, mix: [['spitter', 0.2], ['bloater', 0.2], ['bat', 0.2], ['gorehorn', 0.15], ['shade', 0.15], ['ghoul', 0.1]], dark: 0.35 },
+  { rooms: 10, enemies: 23, mix: [['shade', 0.2], ['gravecaller', 0.15], ['warden', 0.15], ['brute', 0.15], ['cultist', 0.15], ['bat', 0.1], ['ghoul', 0.1]], dark: 0.45 },
+  { rooms: 11, enemies: 24, mix: [['brute', 0.2], ['gorehorn', 0.2], ['warden', 0.15], ['spitter', 0.15], ['bloater', 0.1], ['shade', 0.1], ['gravecaller', 0.1]], dark: 0.35 },
+  { rooms: 11, enemies: 26, mix: [['warden', 0.15], ['brute', 0.15], ['ghoul', 0.1], ['bat', 0.1], ['bloater', 0.1], ['cultist', 0.1], ['spitter', 0.1], ['gorehorn', 0.1], ['shade', 0.05], ['gravecaller', 0.05]], dark: 0.4 },
+  { rooms: 7, enemies: 14, mix: [['ghoul', 0.2], ['cultist', 0.15], ['warden', 0.15], ['shade', 0.15], ['gorehorn', 0.1], ['bat', 0.1], ['spitter', 0.1], ['bloater', 0.05]], dark: 0.2, boss: true },
 ];
 const START_LEVEL = Math.max(0, Math.min(LEVELS.length - 1, (parseInt(params.get('level'), 10) || 1) - 1));
 const MAX_HP = 100;
@@ -648,18 +658,17 @@ const FACES = [
   { n: [0, 0, 1], u: [1, 0, 0], v: [0, 1, 0] },
   { n: [0, 0, -1], u: [-1, 0, 0], v: [0, 1, 0] },
 ];
-// every cube corner is nudged by a hash of its position; faces sharing a corner move together, so no cracks,
-// but walls stop being ruler-straight
-const WOBBLE_XZ = 0.16, WOBBLE_Y = 0.1;
+// cube corners stay on the grid: walls are straight and blocks read as blocks (raise these for a hand-built wobble)
+const WOBBLE_XZ = 0, WOBBLE_Y = 0;
 const CORNERS = [[-1, -1], [1, -1], [1, 1], [-1, 1]];
 const AOF = [0.45, 0.64, 0.82, 1.0];
 
 // Bevelled cubes. Every outside edge (two open faces of a block meeting) is cut back: each open face shrinks away
 // from that edge, a slanted strip fills it, a triangle fills a corner where three open faces meet, and a small cap
-// closes a strip that runs into a neighbour without the same bevel. How deep the cut goes depends on a hash of the
-// grid corner, so neighbouring blocks agree (no cracks) but edges look worn instead of machined.
+// closes a strip that runs into a neighbour without the same bevel. The cut is a thin, even chamfer, so edges catch
+// the light without the blocks looking rounded off.
 const faceOf = (axis, sign) => axis * 2 + (sign > 0 ? 0 : 1);
-const bevelAt = (cx, cy, cz) => 0.14 + 0.18 * hash3(cx * 5 + 1, cy * 5 + 2, cz * 5 + 3);
+const bevelAt = () => 0.06;
 function openFaces(x, y, z) {
   let open = 0;
   for (let f = 0; f < 6; f++) { const n = FACES[f].n; if (!opaqueAt(x + n[0], y + n[1], z + n[2])) open |= 1 << f; }
@@ -976,8 +985,13 @@ function respawn() {
 // hp, speed (blocks/s), half-width w, height h, head = height where the head hitbox starts,
 // reach (melee range, 0 = none), dmg, cd = seconds between attacks, windup = telegraph before the blow lands
 // special kinds: lift = flies this high off the floor; blast = explodes (radius) instead of striking, and when killed;
-// lob = ranged shots arc and leave an acid pool; shield = blocks shots from the front except while swinging
+// lob = ranged shots arc and leave an acid pool; shield = blocks shots from the front except while swinging;
+// rush = charges in a straight line at this speed (rushDmg on contact) and is dazed if it hits a wall;
+// blink = vanishes and reappears nearby when hurt, or to close in; raise = keeps up to this many dead risen at once
 const ETYPES = {
+  gorehorn: { hp: 140, speed: 3.0, w: 0.44, h: 1.45, head: 1.05, reach: 1.7, rush: 11, rushDmg: 24, rushRange: [4, 13], dmg: 14, cd: 1.1, windup: 0.4, gold: 4, pitch: 0.7, drop: 0.45, stride: 2.4, blood: [0.5, 0.12, 0.08] },
+  shade: { hp: 45, speed: 3.6, w: 0.3, h: 1.55, head: 1.15, lift: 0.4, reach: 1.6, blink: true, dmg: 12, cd: 1.1, windup: 0.35, gold: 2, pitch: 1.8, drop: 0.2, stride: 0, blood: [0.55, 0.85, 0.95] },
+  gravecaller: { hp: 85, speed: 2.8, w: 0.3, h: 1.85, head: 1.45, reach: 0, keep: [7, 13], raise: 2, dmg: 0, cd: 4.5, windup: 0.9, gold: 4, pitch: 0.9, drop: 0.45, stride: 2.2, blood: [0.3, 0.5, 0.3] },
   ghoul: { hp: 60, speed: 3.7, w: 0.3, h: 1.7, head: 1.3, reach: 1.6, dmg: 10, cd: 0.9, windup: 0.32, gold: 1, pitch: 1.3, drop: 0.25, stride: 2.6, blood: [0.72, 0.68, 0.58] },
   bat: { hp: 28, speed: 5.0, w: 0.3, h: 0.5, head: 0.3, lift: 1.35, reach: 1.5, dmg: 6, cd: 0.8, windup: 0.22, gold: 1, pitch: 2.2, drop: 0.12, stride: 0, blood: [0.35, 0.18, 0.3] },
   bloater: { hp: 75, speed: 2.5, w: 0.42, h: 1.55, head: 1.2, reach: 1.8, blast: 3.2, dmg: 38, cd: 0, windup: 0.8, gold: 2, pitch: 0.75, drop: 0.3, stride: 2.0, blood: [1, 0.55, 0.15] },
@@ -993,11 +1007,12 @@ const liftOf = e => e.hov || 0;
 function addEnemy(type, x, y, z) {
   const k = ETYPES[type];
   // creatures on deeper floors are a little tougher
-  const hp = type === 'boss' ? k.hp : Math.round(k.hp * (1 + level * 0.04));
+  const hp = type === 'boss' ? k.hp : Math.round(k.hp * (1 + level * 0.03));
   const e = { type, k, x, y, z, vx: 0, vy: 0, vz: 0, w: k.w, h: k.h, hp, maxHp: hp, yaw: rand() * Math.PI * 2,
     alert: false, los: false, losT: rand() * 0.2, cd: 0.6 + rand(), atk: 0, cast: 0, strike: 0, hurt: 0,
     dead: false, deadT: 0, phase: rand() * 10, walkAmt: 0, strafe: rand() < 0.5 ? 1 : -1, strafeT: 0,
-    enraged: false, summonT: 3, leash: null, summoned: false, hov: k.lift || 0 };
+    enraged: false, summonT: 3, leash: null, summoned: false, hov: k.lift || 0,
+    rush: 0, rushT: 0, rushWind: 0, rushCd: 1.5, rdir: [0, 1], rushHit: false, stun: 0, blinkCd: 1, owner: null };
   enemies.push(e);
   return e;
 }
@@ -1130,9 +1145,42 @@ function summonAdd() {
     const x = r.x + 1 + Math.floor(Math.random() * (r.w - 2)), z = r.z + 1 + Math.floor(Math.random() * (r.d - 2));
     if (!walk[z * WX + x] || Math.hypot(x + 0.5 - P.x, z + 0.5 - P.z) < 5) continue;
     if (Math.abs(x - exitPos[0]) <= 1 && Math.abs(z - exitPos[1]) <= 1) continue;
-    const g = addEnemy(['ghoul', 'ghoul', 'bat', 'bloater'][Math.floor(Math.random() * 4)], x + 0.5, FY + 1, z + 0.5);
+    const g = addEnemy(['ghoul', 'ghoul', 'bat', 'bloater', 'shade'][Math.floor(Math.random() * 5)], x + 0.5, FY + 1, z + 0.5);
     g.summoned = true; g.alert = true; g.cd = 1;
     burst([g.x, g.y + 0.8, g.z], [1, 0.5, 0.15], 18, 3, 1);
+    return;
+  }
+}
+
+// a shade slips through the dark: it vanishes and reappears a few blocks away, around you (close) or around itself
+function blink(e, close) {
+  for (let t = 0; t < 30; t++) {
+    const a = Math.random() * Math.PI * 2, r = close ? 2.5 + Math.random() * 1.5 : 3 + Math.random() * 2.5;
+    const x = Math.floor((close ? P.x : e.x) + Math.sin(a) * r) + 0.5, z = Math.floor((close ? P.z : e.z) + Math.cos(a) * r) + 0.5;
+    if (!walkAt(x, z) || Math.hypot(x - P.x, z - P.z) < 2.5) continue;
+    // never through a wall: the floor must run unbroken from here to there
+    const len = Math.hypot(x - e.x, z - e.z);
+    let clear = true;
+    for (let s = 0.5; s < len && clear; s += 0.5) clear = walkAt(e.x + (x - e.x) * s / len, e.z + (z - e.z) * s / len);
+    if (!clear) continue;
+    burst([e.x, e.y + liftOf(e) + 0.8, e.z], [0.55, 0.85, 0.95], 14, 2, 1);
+    e.x = x; e.z = z; e.vx = e.vz = 0; e.atk = 0; e.blinkCd = 2.2;
+    burst([e.x, e.y + liftOf(e) + 0.8, e.z], [0.55, 0.85, 0.95], 14, 2, 1);
+    sfx('blink', e.k.pitch, volAt(e));
+    return;
+  }
+}
+// a gravecaller raises one of the dead beside it; they fall again when it does
+const minionsOf = e => enemies.filter(o => o.owner === e && !o.dead).length;
+function raiseDead(e) {
+  for (let t = 0; t < 30; t++) {
+    const a = Math.random() * Math.PI * 2, r = 1.5 + Math.random() * 1.5;
+    const x = Math.floor(e.x + Math.sin(a) * r) + 0.5, z = Math.floor(e.z + Math.cos(a) * r) + 0.5;
+    if (!walkAt(x, z) || Math.hypot(x - P.x, z - P.z) < 3) continue;
+    const m = addEnemy(Math.random() < 0.7 ? 'ghoul' : 'bat', x, e.y, z);
+    m.owner = e; m.alert = true; m.cd = 1;
+    burst([x, e.y + 0.3, z], [0.45, 1, 0.55], 20, 2.5, 1);
+    sfx('raise', 1, volAt(e));
     return;
   }
 }
@@ -1142,33 +1190,52 @@ function updateEnemy(e, dt) {
   if (e.dead) { e.deadT += dt; e.hov = Math.max(0, e.hov - dt * 5); return; } // fliers drop out of the air
   e.hurt = Math.max(0, e.hurt - dt);
   e.strike = Math.max(0, e.strike - dt);
-  e.cd -= dt;
+  e.cd -= dt; e.rushCd -= dt; e.blinkCd -= dt;
   const dx = P.x - e.x, dz = P.z - e.z, dist = Math.max(Math.hypot(dx, dz), 1e-4), dy = P.y - e.y;
   if ((e.losT -= dt) <= 0) { e.losT = 0.12 + Math.random() * 0.1; e.los = dist < 36 && canSee(e); }
   if (!e.alert && ((e.los && dist < 20) || (dist < 3.5 && Math.abs(dy) < 3))) alertEnemy(e);
+  if (K.blink && e.alert && e.los && dist > 9 && e.blinkCd <= 0 && e.atk <= 0) blink(e, true);
 
   const rage = e.enraged ? 1.35 : 1;
   let wx = 0, wz = 0;
-  if (e.alert) {
-    e.yaw = turnTo(e.yaw, Math.atan2(dx, dz), dt * 10);
+  if (e.stun > 0) e.stun -= dt; // dazed after slamming into a wall: no moving, no attacking
+  else if (e.alert) {
+    e.yaw = turnTo(e.yaw, e.rush > 0 ? Math.atan2(e.rdir[0], e.rdir[1]) : Math.atan2(dx, dz), dt * 10);
+    // ---- a gorehorn's charge: a straight line, no steering, until it hits you, a wall, or runs out of steam
+    if (e.rush > 0) {
+      e.rushT += dt;
+      [wx, wz] = e.rdir;
+      if (!e.rushHit && dist < K.reach + 0.2 && Math.abs(dy) < 2) {
+        e.rushHit = true; hurtPlayer(K.rushDmg); sfx('thud', 1, 1);
+        e.rush = Math.min(e.rush, 0.15);
+      }
+      if ((e.rush -= dt) <= 0) e.cd = K.cd;
+    } else if (e.rushWind > 0) { // head down, pawing the floor: your cue to get out of its line
+      if ((e.rushWind -= dt) <= 0) { e.rdir = [dx / dist, dz / dist]; e.rush = 1.4; e.rushT = 0; e.rushHit = false; sfx('rush', K.pitch, volAt(e)); }
     // ---- attacks: a visible windup, then the blow lands if you're still in reach
-    if (e.atk > 0) {
+    } else if (e.atk > 0) {
       if ((e.atk -= dt) <= 0) {
         e.strike = 0.22; e.cd = K.cd / rage;
         if (K.blast) { explode(e); return; } // the fuse has burnt down
         if (dist < K.reach + 0.4 && Math.abs(dy) < 2) hurtPlayer(K.dmg);
       }
     } else if (e.cast > 0) {
-      if ((e.cast -= dt) <= 0) { castFire(e); e.cd = K.cd / rage * (0.8 + Math.random() * 0.4); }
+      if ((e.cast -= dt) <= 0) { if (K.raise) raiseDead(e); else castFire(e); e.cd = K.cd / rage * (0.8 + Math.random() * 0.4); }
     } else if (e.cd <= 0) {
       if (K.reach && dist < K.reach && Math.abs(dy) < 2) {
         e.atk = e.atkMax = K.windup / rage;
         sfx(K.blast ? 'fuse' : 'swing', K.pitch, volAt(e));
       }
+      else if (K.rush && e.los && e.rushCd <= 0 && dist > K.rushRange[0] && dist < K.rushRange[1] && Math.abs(dy) < 1.5 &&
+               directOk(e, dx / dist, dz / dist, dist - 1)) {
+        e.rushWind = e.rushWindMax = 0.75; e.rushCd = 4;
+        sfx('snort', K.pitch, volAt(e));
+      }
+      else if (K.raise && e.los && dist < 20 && minionsOf(e) < K.raise) { e.cast = e.castMax = K.windup; sfx('cast', 0.6, volAt(e)); }
       else if (K.ranged && e.los && dist < 22) { e.cast = e.castMax = K.windup; sfx('cast', 1, volAt(e)); }
     }
     // ---- movement (everyone stands still while winding up, which is your opening)
-    if (e.atk <= 0 && e.cast <= 0) {
+    if (e.atk <= 0 && e.cast <= 0 && e.rush <= 0 && e.rushWind <= 0) {
       let dir = null;
       if (K.keep) { // casters keep their distance and sidestep
         if (!e.los || dist > K.keep[1]) dir = chaseDir(e, dx, dz, dist);
@@ -1205,7 +1272,7 @@ function updateEnemy(e, dt) {
     }
   }
 
-  const sp = K.speed * rage, a = 1 - Math.exp(-10 * dt);
+  const sp = (e.rush > 0 ? K.rush : K.speed) * rage, a = 1 - Math.exp(-10 * dt);
   e.vx += (wx * sp - e.vx) * a; e.vz += (wz * sp - e.vz) * a;
   e.vy = Math.max(e.vy - 30 * dt, -55);
   const wy = e.vy * dt, my = collide(e, 1, wy);
@@ -1214,11 +1281,15 @@ function updateEnemy(e, dt) {
   const mx = collide(e, 0, e.vx * dt); if (mx !== e.vx * dt) e.vx = 0; e.x += mx;
   const mz = collide(e, 2, e.vz * dt); if (mz !== e.vz * dt) e.vz = 0; e.z += mz;
   const hs = Math.hypot(mx, mz) / dt;
+  if (e.rush > 0 && e.rushT > 0.2 && hs < K.rush * 0.3) { // ran into something solid
+    e.rush = 0; e.cd = K.cd;
+    if (!e.rushHit) { e.stun = 1.6; sfx('thud', 1, volAt(e)); burst([e.x, e.y + 1, e.z], [0.5, 0.45, 0.4], 14, 2.5, 0); }
+  }
   e.walkAmt += (Math.min(1, hs / K.speed) - e.walkAmt) * Math.min(1, dt * 8);
   e.phase += hs * dt * K.stride + dt * 0.6;
   if (K.lift) { // bob in the air, swooping down to your height for the bite
     const dive = e.atk > 0 ? 1 - e.atk / e.atkMax : e.strike > 0 ? 1 : 0;
-    const want = lerp(K.lift + Math.sin(time * 2.4 + e.phase) * 0.12, 0.75, dive);
+    const want = lerp(K.lift + Math.sin(time * 2.4 + e.phase) * 0.12, Math.min(K.lift, 0.75), dive);
     e.hov += (want - e.hov) * Math.min(1, dt * 7);
   }
   if ((!K.lift && touchingLava(e)) || e.y < -5) killEnemy(e, false);
@@ -1245,18 +1316,23 @@ function explode(e) {
 }
 
 function damageEnemy(e, dmg, dir) {
+  if (e.stun > 0) dmg *= 1.5; // a dazed gorehorn is wide open
   e.hp -= dmg; e.hurt = 0.1;
   alertEnemy(e);
-  const kb = e === boss ? 0 : e.type === 'brute' ? 1.2 : e.type === 'warden' ? 1.6 : e.type === 'bat' ? 5 : 3.5;
+  const kb = e === boss || e.rush > 0 ? 0 : e.type === 'brute' || e.type === 'gorehorn' ? 1.2 : e.type === 'warden' ? 1.6 : e.type === 'bat' ? 5 : 3.5;
   e.vx += dir[0] * kb; e.vz += dir[2] * kb;
   if (e.hp <= 0) killEnemy(e, true);
-  else sfx('ehurt', e.k.pitch, volAt(e));
+  else {
+    sfx('ehurt', e.k.pitch, volAt(e));
+    if (e.k.blink && e.blinkCd <= 0) blink(e, false); // shoot a shade and it's gone before the second shot
+  }
 }
 function killEnemy(e, byPlayer) {
   if (e.dead) return;
-  e.dead = true; e.deadT = 0; e.hp = 0; e.atk = e.cast = 0;
-  if (byPlayer) { kills++; gold += e.k.gold; }
+  e.dead = true; e.deadT = 0; e.hp = 0; e.atk = e.cast = e.rush = e.rushWind = 0;
+  if (byPlayer) { kills++; if (!e.owner) gold += e.k.gold; } // the risen carry nothing
   if (e.k.blast) explode(e); // shoot a bloater and it goes off where it stands
+  if (e.k.raise) for (const o of enemies) if (o.owner === e) killEnemy(o, false); // its dead fall with it
   sfx('edie', e.k.pitch, volAt(e));
   burst([e.x, e.y + e.h * 0.5, e.z], e.k.blood, e === boss ? 60 : 16, e === boss ? 5 : 3, e === boss ? 1 : 0);
   if (byPlayer && Math.random() < e.k.drop) pickups.push({ x: e.x, y: e.y + 0.5, z: e.z, t: Math.random() * 6, hp: 20 });
@@ -1825,6 +1901,10 @@ function sfx(name, mat = 'stone', vol = 1) {
     case 'fuse': noise(0.8, 4000, 0.08, 'highpass'); tone(500, 0.8, 0.03, 'sine', 0, 2.2); break;
     case 'blast': noise(1.0, 180, 0.6, 'lowpass'); tone(55, 0.7, 0.25, 'sine', 0, 0.4); noise(0.3, 1200, 0.2, 'bandpass'); break;
     case 'clang': tone(1250, 0.25, 0.06, 'square', 0, 0.9); tone(1870, 0.2, 0.04, 'triangle'); noise(0.08, 3000, 0.12, 'bandpass', 2); break;
+    case 'snort': noise(0.35, 420 * p, 0.25, 'bandpass', 1.5); noise(0.3, 380 * p, 0.2, 'bandpass', 1.5, 0.4); break;
+    case 'rush': tone(90 * p, 0.6, 0.1, 'sawtooth', 0, 1.6); noise(0.6, 300, 0.25, 'lowpass'); break;
+    case 'blink': tone(1500, 0.25, 0.04, 'sine', 0, 0.3); noise(0.2, 5000, 0.06, 'highpass'); break;
+    case 'raise': tone(110, 1.0, 0.06, 'triangle', 0, 2); tone(165, 1.0, 0.04, 'sine', 0.1, 2); noise(0.8, 300, 0.12, 'lowpass'); break;
   }
 }
 function startAmbience() {
@@ -1922,6 +2002,9 @@ const PAL = {
   chitin: [0.21, 0.25, 0.14], chitinD: [0.12, 0.15, 0.09], acid: [0.5, 0.95, 0.2],
   plate: [0.44, 0.45, 0.48], plateD: [0.26, 0.26, 0.29], tabard: [0.45, 0.1, 0.08], shield: [0.34, 0.22, 0.12],
   brass: [0.78, 0.58, 0.22], visor: [0.6, 0.85, 1],
+  fur: [0.36, 0.24, 0.17], furD: [0.2, 0.13, 0.1], hoof: [0.12, 0.1, 0.09],
+  shroud: [0.52, 0.58, 0.62], shroudD: [0.3, 0.35, 0.4], wisp: [0.55, 0.9, 1],
+  grave: [0.22, 0.25, 0.2], graveD: [0.12, 0.14, 0.11], soul: [0.45, 1, 0.55],
 };
 // arm angle: rest, raised during the windup, slammed forward just after the blow
 function armPose(e, rest, raised, slam) {
@@ -2106,6 +2189,83 @@ function drawWarden(e, base) {
   cbox(arm, [0, -1.0, 0], [0.09, 0.09, 0.09], PAL.plate);
   for (const [x, z] of [[0.11, 0], [-0.11, 0], [0, 0.11], [0, -0.11]]) cbox(arm, [x, -1.0, z], [0.03, 0.03, 0.03], PAL.plateD);
 }
+// gorehorn: a shaggy, horned beast on four legs; it drops its head and paws the floor before it charges, and
+// stands swaying with stars round its head if it runs into a wall
+function drawGorehorn(e, base) {
+  const sw = Math.sin(e.phase) * e.walkAmt, wind = e.rushWind > 0 ? 1 - e.rushWind / e.rushWindMax : 0;
+  const lower = e.rush > 0 ? 1 : wind; // head down to charge
+  const body = XF.mul(base, XF.rz(e.stun > 0 ? Math.sin(time * 9) * 0.08 : 0));
+  ebox(body, -0.32, 0.6, -0.55, 0.32, 1.12, 0.4, PAL.fur);
+  ebox(body, -0.28, 1.08, -0.15, 0.28, 1.38, 0.38, PAL.furD);                         // shoulder hump
+  ebox(body, -0.03, 0.9, -0.62, 0.03, 1.02, -0.55, PAL.furD);                         // tail
+  for (const [s, z, k] of [[-1, 0.28, 0], [1, 0.28, 1], [-1, -0.42, 1], [1, -0.42, 0]]) {
+    let a = (k ? 1 : -1) * sw * 0.7;
+    if (wind > 0 && s > 0 && z > 0) a = -0.5 + Math.sin(time * 16) * 0.5;             // pawing
+    const leg = joint(body, s * 0.2, 0.68, z, a);
+    ebox(leg, -0.08, -0.6, -0.08, 0.08, 0, 0.08, PAL.furD);
+    ebox(leg, -0.09, -0.68, -0.09, 0.09, -0.56, 0.1, PAL.hoof);
+  }
+  const head = joint(body, 0, 0.95, 0.38, lerp(armPose(e, 0.1, -0.5, 0.7), 0.75, lower));
+  ebox(head, -0.19, -0.2, 0, 0.19, 0.18, 0.36, PAL.fur);
+  ebox(head, -0.13, -0.24, 0.32, 0.13, 0.02, 0.48, PAL.furD);                         // snout
+  for (const s of [-1, 1]) {
+    ebox(head, s * 0.07 - 0.03, 0.04, 0.36, s * 0.07 + 0.03, 0.09, 0.37, PAL.eyeR, 1);
+    ebox(head, Math.min(s * 0.17, s * 0.4), 0.06, 0.06, Math.max(s * 0.17, s * 0.4), 0.15, 0.16, PAL.horn);
+    ebox(head, Math.min(s * 0.32, s * 0.4), 0.06, 0.16, Math.max(s * 0.32, s * 0.4), 0.14, 0.5, PAL.horn);
+    ebox(head, Math.min(s * 0.33, s * 0.39), 0.07, 0.5, Math.max(s * 0.33, s * 0.39), 0.25, 0.56, PAL.tusk);
+  }
+  if (e.stun > 0) for (let k = 0; k < 3; k++) { // dazed
+    const a = time * 4 + k * 2.09;
+    cbox(body, [Math.sin(a) * 0.32, 1.62, 0.3 + Math.cos(a) * 0.32], [0.045, 0.045, 0.045], PAL.eyeY, 1);
+  }
+}
+// shade: a hooded wraith with no legs, drifting just off the floor, its rags trailing; long claws reach as it strikes
+function drawShade(e, base) {
+  const body = XF.mul(base, XF.rz(Math.sin(time * 1.7 + e.phase) * 0.06));
+  for (let k = 0; k < 4; k++) { // trailing rags
+    const rag = joint(body, -0.13 + k * 0.087, 0.36, (k % 2) * 0.05 - 0.04, Math.sin(time * 3 + k * 1.3) * 0.25 - 0.15);
+    ebox(rag, -0.04, -0.38 - (k % 2) * 0.1, -0.03, 0.04, 0, 0.03, PAL.shroudD, 0.12);
+  }
+  ebox(body, -0.18, 0.3, -0.14, 0.18, 0.72, 0.14, PAL.shroudD, 0.12);
+  ebox(body, -0.24, 0.68, -0.17, 0.24, 1.12, 0.17, PAL.shroud, 0.15);
+  ebox(body, -0.28, 1.04, -0.19, 0.28, 1.2, 0.19, PAL.shroud, 0.15);
+  const head = joint(body, 0, 1.16, 0.03, -0.1);
+  ebox(head, -0.17, 0, -0.17, 0.17, 0.36, 0.17, PAL.shroudD, 0.12);
+  ebox(head, -0.1, 0.33, -0.2, 0.1, 0.42, 0.02, PAL.shroudD, 0.12);                   // hood peak
+  ebox(head, -0.12, 0.04, 0.17, 0.12, 0.27, 0.18, PAL.void);
+  for (const s of [-1, 1]) ebox(head, s * 0.06 - 0.03, 0.15, 0.18, s * 0.06 + 0.03, 0.19, 0.19, PAL.wisp, 1);
+  for (const s of [-1, 1]) {
+    const arm = joint(body, s * 0.3, 1.1, 0, armPose(e, -0.5 + Math.sin(time * 2 + s) * 0.1, -2.3, -0.9));
+    ebox(arm, -0.06, -0.55, -0.06, 0.06, 0, 0.06, PAL.shroud, 0.15);
+    for (const f of [-1, 0, 1]) ebox(arm, f * 0.035 - 0.012, -0.8, -0.012, f * 0.035 + 0.012, -0.55, 0.012, PAL.bone);
+  }
+}
+// gravecaller: a hunched, skull-faced priest with a tall hood and a staff; it lifts the staff and the dead climb up
+function drawGravecaller(e, base) {
+  const sw = Math.sin(e.phase) * e.walkAmt, ck = e.cast > 0 ? 1 - e.cast / e.castMax : 0;
+  const body = XF.mul(base, XF.rz(sw * 0.05));
+  ebox(body, -0.3, 0, -0.26, 0.3, 0.55, 0.26, PAL.graveD);
+  ebox(body, -0.32, 0.02, -0.28, 0.32, 0.1, 0.28, PAL.boneD);
+  const torso = joint(body, 0, 0.55, 0, 0.18 - ck * 0.15);
+  ebox(torso, -0.26, 0, -0.2, 0.26, 0.72, 0.2, PAL.grave);
+  for (const y of [0.3, 0.42, 0.54]) ebox(torso, -0.14, y, 0.2, 0.14, y + 0.05, 0.22, PAL.bone);   // ribs
+  const head = joint(torso, 0, 0.72, 0.04, 0.1);
+  ebox(head, -0.2, 0, -0.2, 0.2, 0.36, 0.2, PAL.graveD);
+  ebox(head, -0.13, 0.34, -0.17, 0.13, 0.54, 0.06, PAL.graveD);
+  ebox(head, -0.06, 0.52, -0.15, 0.06, 0.66, -0.04, PAL.graveD);                      // the hood's point
+  ebox(head, -0.13, 0.03, 0.19, 0.13, 0.28, 0.21, PAL.bone);                          // skull face
+  for (const s of [-1, 1]) ebox(head, s * 0.06 - 0.03, 0.15, 0.21, s * 0.06 + 0.03, 0.2, 0.22, PAL.soul, 1);
+  // staff arm (right): raised overhead to call up the dead
+  const arm = joint(torso, 0.32, 0.64, 0, lerp(-0.35 - sw * 0.3, -2.5, Math.min(1, ck * 2)));
+  ebox(arm, -0.08, -0.55, -0.08, 0.08, 0, 0.08, PAL.grave);
+  ebox(arm, -0.03, -1.15, 0.1, 0.03, 0.45, 0.16, PAL.shield);
+  cbox(arm, [0, 0.55, 0.13], [0.09, 0.09, 0.09], PAL.bone);
+  cbox(arm, [0, 0.72, 0.13], [0.05, 0.08, 0.05], PAL.soul, 0.5 + ck * 0.5);
+  // the free hand reaches toward the ground as it calls
+  const off = joint(torso, -0.32, 0.64, 0, lerp(-0.25 + sw * 0.3, -1.1, ck));
+  ebox(off, -0.08, -0.55, -0.08, 0.08, 0, 0.08, PAL.grave);
+  ebox(off, -0.06, -0.68, -0.05, 0.06, -0.55, 0.07, PAL.bone, ck * 0.4);
+}
 function drawEnemy(e) {
   if (e.dead && e.deadT > 2.5) return;
   E.L = getL(Math.floor(e.x), Math.floor(e.y + liftOf(e) + 1), Math.floor(e.z)) / 15;
@@ -2121,6 +2281,9 @@ function drawEnemy(e) {
   else if (e.type === 'bloater') drawBloater(e, base);
   else if (e.type === 'spitter') drawSpitter(e, base);
   else if (e.type === 'warden') drawWarden(e, base);
+  else if (e.type === 'gorehorn') drawGorehorn(e, base);
+  else if (e.type === 'shade') drawShade(e, base);
+  else if (e.type === 'gravecaller') drawGravecaller(e, base);
   else drawBrute(e, base, e.type === 'boss');
   E.flash = false;
 }

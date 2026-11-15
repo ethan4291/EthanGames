@@ -20,6 +20,16 @@
     "The Deep Dark",
     "The Iron Warrens",
     "The Cinder Crypts",
+    "The Silent Wards",
+    "The Hollow Chapel",
+    "The Gloom Cisterns",
+    "The Ossuary Wells",
+    "The Trampled Halls",
+    "The Weeping Stair",
+    "The Ashen Barracks",
+    "The Sunken Forge",
+    "The Grave Lanterns",
+    "The Black Catacombs",
     "The Last Descent",
     "The Throne of Ash"
   ],
@@ -33,7 +43,10 @@
     "cultist": "Cultist",
     "spitter": "Spitter",
     "warden": "Warden",
-    "brute": "Brute"
+    "brute": "Brute",
+    "gorehorn": "Gorehorn",
+    "shade": "Shade",
+    "gravecaller": "Gravecaller"
   },
   "comfort": {
     "fov": "Field of view",

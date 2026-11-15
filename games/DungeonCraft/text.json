@@ -1,0 +1,82 @@
+{
+  "pageTitle": "DungeonCraft",
+  "title": "DungeonCraft",
+  "loading": "Loading...",
+  "intro": "Fight your way down {levels} floors.\nReach the portal on each floor\nto descend deeper.",
+  "play": "Enter the Dungeon",
+  "resume": "Resume",
+  "retry": "Try Again",
+  "next": "Descend",
+  "again": "Play Again",
+  "skip": "Click to skip",
+  "pausedTitle": "Paused",
+  "levelLabel": "Floor {n}: {name}",
+  "levelNames": [
+    "The Upper Cells",
+    "The Mossy Halls",
+    "The Drowned Stair",
+    "The Bone Gallery",
+    "The Ember Vaults",
+    "The Deep Dark",
+    "The Iron Warrens",
+    "The Cinder Crypts",
+    "The Last Descent",
+    "The Throne of Ash"
+  ],
+  "levelIntro": "Floor {n}: {name}\nFind the exit portal",
+  "bossIntro": "Floor {n}: {name}\nSlay the Ember Lord",
+  "newFoes": "New foes: {names}",
+  "enemyNames": {
+    "ghoul": "Ghoul",
+    "bat": "Gloomwing",
+    "bloater": "Bloater",
+    "cultist": "Cultist",
+    "spitter": "Spitter",
+    "warden": "Warden",
+    "brute": "Brute"
+  },
+  "comfort": {
+    "fov": "Field of view",
+    "sens": "Mouse speed",
+    "motion": "Camera effects",
+    "on": "On",
+    "off": "Off"
+  },
+  "doneTitle": "Floor Cleared",
+  "doneStats": "Floor {n}: {name}\n\nKills {kills}   Gold {gold}\nTime {time}",
+  "deadTitle": "You Died",
+  "deadStats": "Floor {n}: {name}",
+  "wonTitle": "Victory",
+  "wonStats": "The Ember Lord is slain\nand the dungeon is yours.\n\nKills {kills}   Gold {gold}\nTime {time}",
+  "cinematic": ["Victory", "The Ember Lord has fallen.", "The dungeon is yours."],
+  "bossName": "The Ember Lord",
+  "controls": [
+    ["WASD", "Move"],
+    ["Mouse", "Look"],
+    ["Click", "Shoot"],
+    ["R", "Reload"],
+    ["Space", "Jump"],
+    ["Shift / Double-tap W", "Sprint"],
+    ["C", "Sneak"],
+    ["Esc", "Pause"]
+  ],
+  "hud": {
+    "level": "Floor {n}/{total}  {name}",
+    "gold": "Gold {gold}",
+    "kills": "Kills {kills}",
+    "hp": "HP",
+    "ammo": "{ammo}/{mag}",
+    "reloading": "Reloading",
+    "reloadHint": "R to reload"
+  },
+  "messages": {
+    "health": "+{hp} health",
+    "lavaBurn": "The lava burns!",
+    "portalSealed": "The portal is sealed.\nSlay the Ember Lord.",
+    "portalOpen": "The Ember Lord falls!\nThe portal is open.",
+    "bossRage": "The Ember Lord is enraged!",
+    "noWebGL": "Your browser does not support WebGL2.",
+    "fileProtocol": "Browsers block textures loaded straight from a file.\nIn Terminal, run this in the DungeonCraft folder:\n\npython3 -m http.server 8000\n\nthen open http://localhost:8000",
+    "loadFailed": "Could not load: {error}"
+  }
+}

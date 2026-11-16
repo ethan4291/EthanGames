@@ -6,7 +6,7 @@ A simple personal game site, deployed to GitHub Pages by GitHub Actions.
 
 Either:
 
-- **Folder game:** `games/my-game/index.html` (plus any JS, images, sounds it uses)
+- **Folder game:** `games/my-game/index.html` (plus any JS, images, sounds it uses). If the folder has only one `.html` file, it can have any name.
 - **Single file:** `games/my-game.html`
 
 Then commit and push (or use GitHub's **Add file → Upload files** inside the `games/` folder). The site rebuilds automatically.

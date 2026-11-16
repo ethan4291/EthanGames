@@ -51,9 +51,11 @@ for (const entry of fs.readdirSync(gamesDir, { withFileTypes: true })) {
   if (!entry.isDirectory()) continue;
 
   // A folder game: games/my-game/index.html (+ optional game.json and thumbnail.png)
-  const indexFile = ["index.html", "index.htm"].find((f) => fs.existsSync(path.join(full, f)));
+  // Use index.html, or failing that the folder's only .html file (e.g. a single-file build)
+  const htmlFiles = fs.readdirSync(full).filter((f) => /\.html?$/i.test(f));
+  const indexFile = htmlFiles.find((f) => /^index\.html?$/i.test(f)) || (htmlFiles.length === 1 ? htmlFiles[0] : null);
   if (!indexFile) {
-    console.warn(`Skipping games/${entry.name}: no index.html`);
+    console.warn(`Skipping games/${entry.name}: no index.html (found ${htmlFiles.length} .html files)`);
     continue;
   }
   let meta = {};

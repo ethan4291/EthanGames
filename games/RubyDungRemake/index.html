@@ -1687,7 +1687,9 @@ function updatePlayer(dt) {
   // Wait for the ground to load before simulating.
   if (!chunks.has(chunkKey(Math.floor(p.x / CHUNK_SIZE), Math.floor(p.z / CHUNK_SIZE)))) return;
 
-  const fluid = fluidAt(p.x, p.y + 0.4, p.z);
+  // In a fluid if the feet or the waist are in it (checking feet too means
+  // you still count as swimming while bobbing at the surface).
+  const fluid = fluidAt(p.x, p.y + 0.1, p.z) || fluidAt(p.x, p.y + 0.9, p.z);
   const sneak = keys.has("ShiftLeft") || keys.has("ShiftRight");
   let fwd = 0, side = 0;
   if (keys.has("KeyW") || keys.has("ArrowUp")) fwd += 1;
@@ -1714,6 +1716,12 @@ function updatePlayer(dt) {
     p.vy = (p.vy - 10 * dt) * Math.exp(-dt * 3);
     if (space) p.vy = Math.min(p.vy + 30 * dt, 3.5);
     p.vy = Math.max(p.vy, -3);
+    // Swimming into a ledge while holding jump climbs up it and hops out
+    // onto the land, like Minecraft.
+    const mx = tx || p.vx, mz = tz || p.vz, ml = Math.hypot(mx, mz);
+    if (space && ml > 0.01 && playerCollides(p.x + (mx / ml) * 0.1, p.y, p.z + (mz / ml) * 0.1)) {
+      p.vy = Math.max(p.vy, JUMP_SPEED);
+    }
   } else {
     p.vy = Math.max(p.vy - GRAVITY * dt, -78);
     if (space && p.onGround) p.vy = JUMP_SPEED;
@@ -1730,8 +1738,6 @@ function updatePlayer(dt) {
     if (movePlayerAxis(0, (p.vx * dt) / steps)) { p.vx = 0; bumped = true; }
     if (movePlayerAxis(2, (p.vz * dt) / steps)) { p.vz = 0; bumped = true; }
   }
-  // Swimming into a ledge lets you climb out of the water.
-  if (fluid && bumped && space) p.vy = 5;
   if (bumped && p.sprinting) p.sprinting = false;
 
   if (p.y < -20) enterFirstPerson(true);   // fell out of the world: respawn on top

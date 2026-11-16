@@ -1,3 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title></title>
+<style>
+  @font-face {
+    font-family: 'PixelFont';
+    src: url('data:font/woff2;base64,d09GMgABAAAAABJgAA0AAAAASFgAABILAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGhYcgzwGYACEbBEICvB00n4Lg0QAATYCJAOGdAQgBYRKB4ReG7k2IxE1HRM1iOA/JWg2xvD6obMqmE5SN4m6JErQGe1cnR7tTm21roiCRXGDph2W57zlE2hWfkyCDRZhurA4QpJZeJ7fH3Xufd9jvYGwAJrkBDcnoU4JS7aJ6zQ4wEsveVcau6YSMNkW5dRZkKLO7kl2gJ99Pu1cgBXilsXzxNXe312wJuAISuQ69LpAmygPOJGMosbv9O8fKPBxUDdsnCIs31VPLCJq8pmJK+q+O4R4UVF6lcpGGsmA+ctVGunAV3/7FmaFSTNZmPJ92eQtKF2y1Rr6/y1N6Yx01bXAVlgCUKk8KMZpgFl/5u/37Gi0sVYrvVtZ7nK74tp2Vme/ldxrAoNKh86llIYaDKq0FUKDyIWF4gAe22ycgtZjjJuJs/Vp39+v74B3YB+yQ62hxBJjrLUTa+Sy99Pd99cEAbEAQLyFMgwBkam6oK3xU+ciNfPcvhE6mZDmqLkWqDD0n1OuQAhC9KYOn4NBoU/niabLNmzGoo/+xw1ug9G9ztasWoJO56Zl61ETp6VJm7R+cvD8ZkwUIyroOEAERD5UKipJnfOhLrSmENhSWc6QqDOfQyh0tj+jiuXZ/8PnSYaaAyFm4rtroNK5XussnBuyoeJ5zoC6dKczmSccloW4oypBxUAoF5sxFQLcirAInR1MZjcgX4k1EysGSJ2M5k6neut6/27mwJd9UgEBelYHgCn+hjJAKlssT6Nb+z7hmPbscWyAorp5AYB5SJwFuA5AnyFHrMaflApHNJ7x+9UCg5cKiFNPUZr/iKRY64ru6S29YxCbarNtvi2yZbbLjsVGDlfh+VP9sQ79ByCOJUFJRyTFKnpWsDWbaXOvr/N7If+vgBkAhrjBYK4NDee34PsV+L4WIZYBuvuPvincl783AAKgATDVFSAXRr6c3JrN/3HGVa0aLTpwRps+/SqsqTWkSYca7bZt2tLsNLxYcRIkYXPIYUecwAHDhRsvUeIkSJIiTYEiJcpU9ajU66pOd6nRo8+QMQuWrFhz5MSZKzceAgQJFiJMuBix4sRL0uWybrvmNJi3bMGKK86547xUI/YMu+CeS3YUKXbTvrOq3FIozagypcq1IHN5Ir5QjHhpmDBjwe6oY45jwEMQH37CBKwTIk+GLDkqxITSok6DDk3adBkwZ8KUGQe27Ngz4s6HJy9+vG3wFS1CpCgJAiUS4W/QgElTJiDk/98A4AcAuQPyAZJ2ACkvAB6oAIABACppDAYfuDIBBwdtvWyhIRj9eiPiRtE2zhO4kUR6xplwhByIGdHEfl2lnhqraTbpW3ibCwPlFbCkAFDqFEs+ouId4rDYFIx3Rgp1JviWVtp0gLoZoOHhudAa3lXMO58l1rNuCTB3bALXXGnb/nuVbib5zIAjGHU0I+vqIX3dp0pfZIhBAJldd9NXY27Td77KTu2odNh1bNd/MmxWU60SgwDYrbYVsG5SAHPc3OnXRDqZZx5AN4/b+QP23IQU1ololz89jHe+3vpcMkt0lwM/573pXzp9PbXfizZscl0ELXO3a1UbZW84hcdS+ygg252g2kqvjynC9Zz5uT51374IQGxoIViy+r1aO2cyM1kuabuu5YAzwR0QDOVNMNfejiJ58vbRAC0ACLPuM673tXdTiQJqCKUJCSkIhFMSVoRCcGriaPVLaSFOCpqoMooEDSlcYkRUz4XwkApimZR+FhfXwZA7MYXyScHaPDaFYc9ss7gM5ZYs1QwfQMYZkEJYRVaGwLrE3ZDOqopH0WKhrKYyn5jgFnBKR8aVHwy1EDwOxPWwMKq6LAwr4eYDjbhnmEePgsSAzHtLsGN2LkSLRIgzniTDyUNzR6G8Ek9CE6wMyORehlJUVkKLRUvDhjbMGHMpCvC6v2xgNRXAwggUCRJ7PYSgTV5RpEvG1kdpwglup8CaTjp0/tZdr1688A6jRiAAYkX2jYaGI2yEUED4agQ4JpDdlCU2KgqlAuYHCKlez0mlj0QvcpGO1NK3dCvyfsXpVCbst9GllNVsQ/m0ecUNbEvtYUVwoaaijNyRgJRbfvMoDLqOhDUhD6bAXNSUZNyJX5IekmQF0UTzLC7AZFlcCQmxLmpK1rQZ1SDkaC+d0IVasLlKGNSTvKgXcxoCTsoYtZLGBXO0cUdZAhJxAg+O4C9r2GC83qogpN6xJx2xIGwwFrEk9VR+tHKBggk6U1LmwfkF1dp8yUJX3ga9eH9YtsMWX5wQqUZ21yGWFNq9ajBoEVsoSz36d5cSzFLbAJZ5HBsmU2S1hKJbU3Wc79U6Nu0xgKAelp0Z4jqLRPumclG2eKPlL+r190iKNpW7y5sA7cqgGMvWIEl+SE0N0tmH8mlGSxpVQE9Urd3YqVrA4oAp+2BKXB2A9K0eTRqj3WAoGXskoL132wA2/MvgLLOL0yqYLSBZEKCPLV8PkjVdB1SZ2IaBQd0U2Dakfm5sFl48kBeNEFPjhuqccG1xKdLMwtZahGBvKKj6sjd4NlQ2UZAigsnBtsxkmBAUrlaQNUGBWoRSctWWPDeHg9iWFt953iW8s41nKaqZgHL5RcUdtBmY0DFS28bLdxTjSGv0Ny4ptkZdtFbyxfXlBPJDC4Ka2InUcWZ417DMcPZAbTE6gjA8DIy0MWAeNVYPa4tlrhwoNDFkIcAYzAytW7JuIRhZsd7KzTSi50qCGnCvLdArficHWmmiCSHD/ERsIt1qdKQoYJHWYU6i20IBgh6JxJBmjvp7VLIwpFuZVnPEYIUCAskhO76ejxt9JGFxxlGRPKmMLhhBMW5gFMreRedqpVDNopuVpA5k2WxxghipqIfCBeIQRbeLoJs/OepnCw3rhRJpLwo3B29Qq6EQM9waX0tDbZe40xbbQ8/Qa5GCtQc+yGI3ByXFWSYyj81HTC3W1zqV4c3rHdDDtnUb32qt2mopLZvM3ZEnvGTljav/AAf3pR20pETliLUD5zAcEqZRuQ9zKv2DmWBzQez4zdVKH+VrRaAdiE1/2ETrXlpfGErt8QoFgzpPFunNUSa4VWFHgoo0idkyGesoICEQZhHswBR91la3rV3gEjWmUsVVpknJ6pmHX/KmF43M4y/mWPbQU4884NT8oSZ5LwGogx9eW6Gg7lmG/eALtL62Cp9ZUfqamgDfQ7nZ8bGexsAjpAPQHi/0A1pEaFHLboEV7d7dlF4Wbk7rt4KwRSduRJ4z0D893esysc4j7AYVAWuIKyXUddVmqQXZGi4jTAKLOSCwevool+taG4JeINVM5C9/6RKRoAwBZkHGFI/KetWPFCwGXCty3kllWldUY5t/MES0hG3Ha/tc6iFbK775b3PmP/6oxozEvPtWJK7CZJoPNvFwsXLq6RSsjK/OMOpSWGfdXTUUFhBOgAJILasEIC5mwLtlTPxoSoULOiJOa+8v6Dv5BrFchoD8fhVln2F87NH/B/mdN+WJ4DnP9UwOEZPJK3/7wNukPDMoq25+jO5DwuuANDPcW1YujJBA9wCSgw/8hen1aZwisQxxavv9nRFeeQ92LxUGPVGqmTPyNfIsbV5bpsOY5Zn7Cg7jmCvvKM055v3uQzHXQLfeJrTPa109NFJ030JNeFlVetcMGlNOVKhvhUzlCtCsKDcCRJFpo5FhHNpN3SVrrjbYoI4HLifJ0rYu4Qb3LM/gr95bjW2mvJxLSMwkrwkCVPbopYjpdwP9xOkFMwa5FkCOe25XVib8XSGvVIU5K1FfIlZ6K1l9nWjBqt8PSMTirPC+1WzipXQWgAeIBGev81ZJnSRzIe9URfVr8idW4VjoLi+ZiXaEr/9mAzAS/Epx1d5AgoU39Q0OqJTKc64NLg31Kbw++PLxlBz11UYvg93MTzlOTfCrms73QWn0HAWZlactcaDAjplYhAX1YEZdo8rBS/IHZ4oHSETVB+rHBwqhStc6AMQk5XmS6yhCfQXDgrAKDHX7EMzXxdeuOGcWDvl+QyTWUV8wt7se4jmo3csmwcjmsUUkxaa+ZH57WZEEC3kbDqgAReeRoFq6CoesJJ6pB6YvQVcBI0VeS3R9p8NLwpdzcbpV3PvfOwhKDol+mGS4O9MwFVeFDXm0AYvD7dgFnYOG3jRV9XiF4FecuOnM8CRU2vpkopbhKx7KfarCpzaTBFlfv/kfJxMN61HC6Xr3REx7WKz1hnFoxwCTW0XLpk0fPXYC1ErjyY/nY9l+Uvt5rkq6dNytY3UsitNePuss4/wnPo8xLKo75akhjLhUPAjjblOpnjfObJI5bvxrdCKY6sI/XycSypfTlSJWcI2PPdg3Xn7OwgjEJh4Y1AejzXCCNtAGaV4nk8eI9z9dXXZARXv7WVklkuvtdphJvRTe0U/xAawWvJyG+RLhGZ0ZFQvz4wgiRfMWkEFuhqeQSccJ5XPBW6YYaQv3qURhivQHhS7J91v2gf+6vPLp79wn47pD1rAckkBiNknOOtbOcYZNonH8SE14tzCdXq2skwcM4mu+UmA+hdubYq/yYFyppJZRX+l5LYV9teDdwZwji+o8AlhWkZsGcQ4YCKMIcGUs6tn8b3Vqj7pi7T67hgd/hShh7hbiYPL0FbuZrb3NaOSleDv2iNecJ0otEvBme7gEwrPYXLSXB37EQEt6DzeEeMkZzjZDR/roZl7PmFX4Hq4fu+9foRncGLo0G1y/iKBLOV/JVrvYj7o1K4r7I4mcsGHwlcXdB0BecrCv2L0r70MMFtGq82yPHwR3CGswxYG/cFaU3rrO4wfB8PP/weaL4HI+jpG83mzQTuLUxB9R14tT8IYJdK/XpC9//2S8K8KHqVj0ESnA+bUYGqY6X3E26L0SM9pa7svsLqooBnhBXsNCjeUndRMo6jx4+7VE0+hjASzwqLDJtGNnUQ4fMWQdebCuCD1XNWMCOuVaNxUhM+4zhH7IfZyPv0hisvibkEXok2mXsfeoI7UvSpznoaMuFDb06f8mAKK2w6lIRDx+F2Gcqyno9hWf5vWbX0x4JiajeI+I/7O6FU68x7ya9w7jfpykm+RvKierpLT/0+5NErUBjlaKu4vcpfux/sh5u+RCfDvt6mtKBeg497nU+xiWEy5rM8Pc99z+Oz7DlPj1MF8j3UgBCcwwsdV3p6jz34Vzb4NQN0uU0xWnpZabXKxZU0dAgauXK2RlmbNGfke9MM7qZ/jC2LKtrTNm6XcnkalivUfIprI24lDRtCxMz0vEURAh4IJlZM7rf4weA+qG0a0cn/xAGWxegACD3pvs54un8q/L9AHwuoH993c8rOp/+yvqRXiCTxEKYPDmtAJAZ43UB2QlyP7rXi+xmH7AtffY69Cf+A8Ul8e/Ac4U/SEfNxVPdx9g09ixNkUj8M3RGN/e1Y5rjgNArt1er3NCr+F9oyeSUJB4dwZSwUCXe63ZRo78IlVqTKX+RRDwgwIaJUi1qQV+rcBKOFKFwMdQQVNErndTVLzvU4zhuqY4asRNcWVzmeKpIKPibRWwWgxNiKBEfN1o3qIEqorR4WKiVUhU4aXy761rTo8Ji1T54pNEsxbDU5QYUiyIsuLLX6yQnbITHUXVV7gwGGliJJzIPom1GuuvB4tG/9Yo0+bIii5lKTbYe/4NtYWLkJiHir+AsHxToANjUzDfXhMhasNwQXx57zs0xUIH5BEi+xbgLZyPRBqSssN9lYID0FcMQSIw8QKjZUZ0dDZVnHb6wOjtgKPTjKdQaQfO1Ruu9aCDodm85ujr8QNIgTJKnLTPyyhvYyrw4uOD30sCfB045TRBQoSJOOOsc84TJUY8uIwpP3/tCy7yd1mlcROkvX0/4bnkKbjiqgDX3rrYUcVrqnQEvk+hgrwzVAfdVDfU94qBiPy9k0iGjBgzcV2MOPFi32komwf/hoZK8C8nUbIUSTqlmmTtHRu27BSy5yBNhkzp73G8PxdvLHG1YVOrNsxYsL4rIt+z+O8NQTzx6fWFr3yD1gjb8rGjdw/ebURJuHQhiORjosWNBzUaqMV6ZgpDyNwxZM26XTNmzZm3EwrHrSIl4oS6UBPvJwswnDhU89QTGoLESTzFKE7LU6xIiWzuXtAMvSQKI6XuuaGMtlvuuln9r0HXdUyWb9ruhCy7+LEb1zRIjFb0m6WapAeP0slL4P+AdTi6pEmqsbXJbM/BtTy3bt20a8fmEN5Rqw//PeH1K/5x23Oq8rId2wcRFUqN1gYA') format('woff2');
+    font-display: block;
+  }
+  /* Press Start 2P is drawn on an 8px grid: keep every size a multiple of 8 so pixels stay crisp.
+     --t body text, --s small text, --h title. Scaled up on big screens. */
+  :root { --t: 16px; --s: 8px; --h: 32px; --gold: #e8c060; --ink: #1a0e06; --dim: #a0907c; --frame: #8a6430; }
+  /* the menu is tall (title, intro, button, eight controls), so the bigger sizes need real height too;
+     itch.io's usual 960x600 embed stays on the smallest size */
+  @media (min-width: 900px) and (min-height: 760px)  { :root { --t: 24px; --s: 16px; --h: 56px; } }
+  @media (min-width: 1700px) and (min-height: 1100px) { :root { --t: 32px; --s: 24px; --h: 88px; } }
+
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #070506; }
+  body { font-family: 'PixelFont', monospace; font-size: var(--t); line-height: 1.6; color: #efe4cf;
+         user-select: none; -webkit-font-smoothing: none; font-smooth: never; }
+  #game { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  /* a crisp one-pixel ink outline all the way round, not a drop shadow */
+  .outline, .ui, #controls { --o: calc(var(--s) / 8);
+    text-shadow: var(--o) 0 0 var(--ink), calc(var(--o) * -1) 0 0 var(--ink), 0 var(--o) 0 var(--ink), 0 calc(var(--o) * -1) 0 var(--ink); }
+  .outline { --o: calc(var(--t) / 8); }
+  /* the HUD shows while you play (and on the death / floor-cleared screens); the crosshair only while you play */
+  body[data-state="menu"] .ui, body[data-state="cine"] .ui, body[data-state="won"] .ui,
+  body:not([data-state="play"]) #crosshair { display: none !important; }
+
+  /* full-screen fade (black for death, white then black for the ending), letterbox bars and title cards */
+  #fade { position: fixed; inset: 0; background: #000; opacity: 0; pointer-events: none; }
+  #bars::before, #bars::after { content: ''; position: fixed; left: 0; right: 0; height: 0; background: #000;
+    transition: height 1.2s ease; pointer-events: none; z-index: 1; }
+  #bars::before { top: 0; } #bars::after { bottom: 0; }
+  body[data-state="cine"] #bars::before, body[data-state="cine"] #bars::after { height: 11vh; }
+  #cards { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+           gap: var(--t); text-align: center; pointer-events: none; z-index: 2; }
+  #cards div { opacity: 0; color: #efe4cf; }
+  #cards div:first-child { font-size: var(--h); color: var(--gold); letter-spacing: .06em; margin-bottom: var(--t);
+    text-shadow: 0 0 calc(var(--h) / 2) rgba(255, 130, 40, .45); }
+  #skip { position: fixed; right: var(--t); bottom: calc(11vh + var(--s)); font-size: var(--s); color: var(--dim);
+          pointer-events: none; display: none; z-index: 2; }
+  body[data-state="cine"] #skip { display: block; }
+
+  /* a small plus; snaps into an X on a hit (red on a headshot) */
+  #crosshair { position: fixed; left: 50%; top: 50%; width: 0; height: 0; pointer-events: none; transition: transform .08s; }
+  #crosshair::before, #crosshair::after { content: ''; position: absolute; background: rgba(255, 255, 255, .7);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .45); }
+  #crosshair::before { left: -1px; top: -8px; width: 2px; height: 16px; }
+  #crosshair::after { left: -8px; top: -1px; width: 16px; height: 2px; }
+  #crosshair.hit { transform: rotate(45deg) scale(1.3); }
+  #crosshair.hit::before, #crosshair.hit::after { background: #fff; }
+  #crosshair.head::before, #crosshair.head::after { background: #ff5a3a; }
+
+  #hud { position: fixed; left: var(--t); top: var(--t); pointer-events: none; font-size: var(--s); color: var(--dim); }
+  #hudlvl { color: var(--gold); margin-bottom: calc(var(--s) / 2); }
+  #hudstats span { margin-right: calc(var(--t) * 1.25); }
+
+  .bar { position: relative; height: var(--s); background: #1a0e06;
+         box-shadow: 0 0 0 calc(var(--s) / 4) var(--ink), inset 0 0 0 calc(var(--s) / 8) rgba(138, 100, 48, .7); }
+  .fill { position: absolute; left: 0; top: 0; bottom: 0; transition: width .15s; }
+  #vitals { position: fixed; left: var(--t); bottom: var(--t); display: flex; align-items: center; gap: var(--s);
+            pointer-events: none; font-size: var(--s); color: var(--dim); }
+  #vitals .bar { width: calc(var(--t) * 10); }
+  #hpfill { background: linear-gradient(#e0584a, #9a2a1e); }
+  #vitals.low #hpfill { animation: blink .5s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: .45; } }
+  #hpnum { color: #efe4cf; }
+  #ammo { position: fixed; right: var(--t); bottom: var(--t); text-align: right; pointer-events: none; }
+  #gunname { display: block; font-size: var(--s); color: var(--dim); margin-bottom: calc(var(--s) / 2); }
+  #ammonum { display: block; font-size: var(--t); }
+  /* "E  Open chest" under the crosshair */
+  #prompt { position: fixed; left: 0; right: 0; top: calc(50% + var(--t) * 2); text-align: center; pointer-events: none;
+            font-size: var(--s); color: #efe4cf; }
+  #prompt:empty { display: none; }
+  #prompt { --o: calc(var(--s) / 8);
+    text-shadow: var(--o) 0 0 var(--ink), calc(var(--o) * -1) 0 0 var(--ink), 0 var(--o) 0 var(--ink), 0 calc(var(--o) * -1) 0 var(--ink); }
+  /* the sniper scope: a round view with fine cross hairs, black all round */
+  #scope { position: fixed; inset: 0; pointer-events: none; opacity: 0;
+           background: radial-gradient(circle at center, transparent 0, transparent 38vmin, rgba(0, 0, 0, .85) 38.5vmin, #000 41vmin); }
+  #scope::before, #scope::after { content: ''; position: absolute; left: 50%; top: 50%; background: rgba(0, 0, 0, .85); }
+  #scope::before { width: 76vmin; height: 2px; transform: translate(-50%, -50%); }
+  #scope::after { width: 2px; height: 76vmin; transform: translate(-50%, -50%); }
+  body:not([data-state="play"]) #scope { display: none; }
+  #ammolbl { display: block; font-size: var(--s); color: var(--gold); min-height: 1.6em; }
+  /* below the two HUD lines, so a long floor name never runs into it */
+  #boss { position: fixed; top: calc(var(--t) + var(--s) * 4.5); left: 50%; transform: translateX(-50%); text-align: center; display: none;
+          font-size: var(--s); color: #ff9a50; pointer-events: none; }
+  #boss .bar { width: min(60vw, calc(var(--t) * 24)); margin-top: calc(var(--s) / 2); }
+  #bossfill { background: linear-gradient(#ff8a3a, #b0301a); }
+
+  #message { position: fixed; left: 0; right: 0; top: 26%; text-align: center; white-space: pre-line; pointer-events: none;
+             opacity: 0; transition: opacity .5s; color: var(--gold); }
+  #flash { position: fixed; inset: 0; background: radial-gradient(ellipse at center, rgba(160, 28, 16, .2) 20%, #a01c10 100%);
+           opacity: 0; pointer-events: none; transition: opacity .6s; }
+
+  #overlay { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+             gap: var(--t); cursor: pointer; text-align: center; overflow-y: auto; justify-content: safe center;
+             padding: var(--t) 0; box-sizing: border-box;
+             background: radial-gradient(ellipse at center, rgba(28, 16, 10, .55) 0%, rgba(6, 4, 5, .94) 72%);
+             backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+             transition: opacity .35s ease, visibility 0s; }
+  /* panels fade rather than pop: out quickly, in with each line rising into place one after another */
+  #overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .35s ease, visibility 0s .35s; }
+  #overlay:not(.hidden) > * { animation: rise .5s ease-out both; }
+  #overlay > :nth-child(2) { animation-delay: .08s; }
+  #overlay > :nth-child(3) { animation-delay: .16s; }
+  #overlay > :nth-child(4) { animation-delay: .22s; }
+  #overlay > :nth-child(5) { animation-delay: .28s; }
+  #overlay > :nth-child(6) { animation-delay: .34s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  #title { margin: 0; font-size: var(--h); font-weight: normal; line-height: 1.2; color: var(--gold); letter-spacing: .06em;
+           --o: calc(var(--h) / 16);
+           text-shadow: var(--o) 0 0 var(--ink), calc(var(--o) * -1) 0 0 var(--ink), 0 var(--o) 0 var(--ink),
+                        0 calc(var(--o) * -1) 0 var(--ink), 0 0 calc(var(--h) / 2) rgba(255, 130, 40, .45); }
+  #status { white-space: pre-line; max-width: 90vw; }
+  /* pixel window frame: notched corners, gold rim */
+  #playbtn, #controls { --n: calc(var(--s) / 2);
+    clip-path: polygon(var(--n) 0, calc(100% - var(--n)) 0, 100% var(--n), 100% calc(100% - var(--n)),
+                       calc(100% - var(--n)) 100%, var(--n) 100%, 0 calc(100% - var(--n)), 0 var(--n)); }
+  #playbtn { margin: calc(var(--t) / 2) 0; padding: var(--t) calc(var(--t) * 1.5); color: var(--gold);
+             background: #24160c; box-shadow: inset 0 0 0 calc(var(--s) / 4) var(--frame), inset 0 0 0 calc(var(--s) / 2) var(--ink); }
+  #playbtn:hover { background: #3a2412; color: #fff2c8; }
+  #resetbtn { margin-top: calc(var(--t) * -0.5); padding: calc(var(--s) / 2) var(--s); font-size: var(--s); color: var(--dim);
+              background: #24160c; cursor: pointer; box-shadow: inset 0 0 0 calc(var(--s) / 4) var(--frame); }
+  #resetbtn:hover { background: #3a2412; color: #ff9a6a; }
+  #controls { display: grid; grid-template-columns: auto auto; gap: calc(var(--s) * .75) var(--t);
+              padding: var(--t) calc(var(--t) * 1.25); font-size: var(--s); background: rgba(14, 9, 6, .7);
+              box-shadow: inset 0 0 0 calc(var(--s) / 4) rgba(138, 100, 48, .5); }
+  #controls .key { text-align: right; color: var(--gold); }
+  #controls .act { text-align: left; color: var(--dim); }
+  /* comfort settings: clicks in here change a setting, they don't start the game */
+  #comfort { display: grid; grid-template-columns: auto auto auto; align-items: center; gap: calc(var(--s) * .75) var(--s);
+             font-size: var(--s); cursor: default; }
+  #comfort .lbl { text-align: right; color: var(--gold); }
+  #comfort .val { text-align: left; color: var(--dim); min-width: 4em; }
+  #comfort input { width: calc(var(--t) * 7); margin: 0; accent-color: var(--gold); cursor: pointer; }
+  #comfort .tog { justify-self: start; padding: calc(var(--s) / 2) var(--s); color: var(--gold); background: #24160c; cursor: pointer;
+                  box-shadow: inset 0 0 0 calc(var(--s) / 4) var(--frame); }
+  #comfort .tog:hover { background: #3a2412; }
+  #comfort .reset { grid-column: 1 / -1; justify-self: center; margin-top: calc(var(--s) / 2); color: var(--dim); }
+  #comfort .reset:hover { color: var(--gold); }
+</style>
+</head>
+<body data-state="menu">
+<canvas id="game"></canvas>
+<div id="crosshair"></div>
+<div id="hud" class="ui"><div id="hudlvl"></div><div id="hudstats"></div></div>
+<div id="boss" class="ui"><div id="bossname"></div><div class="bar"><div id="bossfill" class="fill"></div></div></div>
+<div id="vitals" class="ui"><span id="hplbl"></span><div class="bar"><div id="hpfill" class="fill"></div></div><span id="hpnum"></span></div>
+<div id="ammo" class="ui"><span id="gunname"></span><span id="ammonum"></span><span id="ammolbl"></span></div>
+<div id="prompt" class="ui"></div>
+<div id="scope"></div>
+<div id="message" class="outline"></div>
+<div id="flash"></div>
+<div id="fade"></div>
+<div id="bars"></div>
+<div id="cards" class="outline"></div>
+<div id="skip" class="outline"></div>
+<div id="overlay">
+  <h1 id="title"></h1>
+  <div id="status" class="outline"></div>
+  <div id="playbtn" class="outline" style="display:none"></div>
+  <div id="resetbtn" class="outline" style="display:none"></div>
+  <div id="controls"></div>
+  <div id="comfort" class="outline"></div>
+</div>
+<script>window.DC_TEXT = {"pageTitle": "DungeonCraft", "title": "DungeonCraft", "loading": "Loading...", "intro": "Fight your way down {levels} floors.\nReach the portal on each floor\nto descend deeper.", "play": "Enter the Dungeon", "continue": "Continue: Floor {n}", "continueIntro": "Welcome back.\nFloor {n}: {name}\nGold {gold}   Kills {kills}", "reset": "Reset progress", "resetConfirm": "Click again to reset", "resume": "Resume", "retry": "Try Again", "next": "Descend", "again": "Play Again", "skip": "Click to skip", "pausedTitle": "Paused", "levelLabel": "Floor {n}: {name}", "levelNames": ["The Upper Cells", "The Mossy Halls", "The Drowned Stair", "The Bone Gallery", "The Ember Vaults", "The Deep Dark", "The Iron Warrens", "The Cinder Crypts", "The Silent Wards", "The Hollow Chapel", "The Gloom Cisterns", "The Ossuary Wells", "The Trampled Halls", "The Weeping Stair", "The Ashen Barracks", "The Sunken Forge", "The Grave Lanterns", "The Black Catacombs", "The Last Descent", "The Throne of Ash"], "levelIntro": "Floor {n}: {name}\nFind the exit portal", "bossIntro": "Floor {n}: {name}\nSlay the Ember Lord", "newFoes": "New foes: {names}", "enemyNames": {"ghoul": "Ghoul", "bat": "Gloomwing", "bloater": "Bloater", "cultist": "Cultist", "spitter": "Spitter", "warden": "Warden", "brute": "Brute", "gorehorn": "Gorehorn", "shade": "Shade", "gravecaller": "Gravecaller"}, "comfort": {"fov": "Field of view", "sens": "Mouse speed", "bright": "Brightness", "vol": "Volume", "motion": "Camera effects", "reset": "Reset settings", "on": "On", "off": "Off"}, "doneTitle": "Floor Cleared", "doneStats": "Floor {n}: {name}\n\nKills {kills}   Gold {gold}\nTime {time}", "deadTitle": "You Died", "deadStats": "Floor {n}: {name}", "wonTitle": "Victory", "wonStats": "The Ember Lord is slain\nand the dungeon is yours.\n\nKills {kills}   Gold {gold}\nTime {time}", "cinematic": ["Victory", "The Ember Lord has fallen.", "The dungeon is yours."], "bossName": "The Ember Lord", "controls": [["WASD", "Move"], ["Mouse", "Look"], ["Click", "Shoot"], ["R", "Reload"], ["E", "Open chest / take gun"], ["Right click", "Aim (sniper)"], ["Space", "Jump"], ["Shift / Double-tap W", "Sprint"], ["C", "Sneak"], ["Esc", "Pause"]], "hud": {"level": "Floor {n}/{total}  {name}", "gold": "Gold {gold}", "kills": "Kills {kills}", "hp": "HP", "ammo": "{ammo}/{mag}", "reloading": "Reloading", "reloadHint": "R to reload"}, "weapons": {"revolver": "Revolver", "pistol": "Pistol", "shotgun": "Shotgun", "ak47": "AK-47", "sniper": "Sniper Rifle", "rpg": "RPG"}, "prompts": {"open": "E  Open chest", "take": "E  Take the {gun}"}, "messages": {"health": "+{hp} health", "chestGold": "The chest holds {gold} gold", "gunTaken": "{gun} in hand", "lavaBurn": "The lava burns!", "portalSealed": "The portal is sealed.\nSlay the Ember Lord.", "portalOpen": "The Ember Lord falls!\nThe portal is open.", "bossRage": "The Ember Lord is enraged!", "noWebGL": "Your browser does not support WebGL2.", "fileProtocol": "Browsers block textures loaded straight from a file.\nIn Terminal, run this in the DungeonCraft folder:\n\npython3 -m http.server 8000\n\nthen open http://localhost:8000", "loadFailed": "Could not load: {error}"}};
+window.DC_IMG = {"chiseled_stone": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASElEQVR42mPQ0dH5TwlmABExMTFkYRQDnJycSMZkGYCsFqsBhPxM0AX4woQkA3D5mf4GIGsaQl6gKBopSonoNtAkKWM1gBIMAOykub4wvvWHAAAAAElFTkSuQmCC", "cracked_bricks": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAd0lEQVR42rVSwQkAMQjLQE7hHO6/Ro8WCuJFLUfvIYgxpUmEmY2sRGR0OFR1NbNm74vNJtHjiARPYg/EfWzS1wLTnGlnczDNUcrWzSShWjjx5K4HJ5r97BVj/GZ2G94rdDlX2H930Hni91BFxmKNGDrNlalXPHgAnm65xKR671YAAAAASUVORK5CYII=", "floor_tiles": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAXklEQVR42mOIiYn5jwvr6Oj8JyTPAGI4OTlhxTAD0MVhYmQbgCyPYQAynywD8LkAxKfIALwuQDedaANABCWYgdR4RxdjINXJ6PL0MQA5oNEDnQGXgoH3ArHpguJ0AABftcWgf4IAbgAAAABJRU5ErkJggg==", "gold_ore": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAfElEQVR42mOIiYn5jwvr6Oj8JyTP4OTk9B+Ed0yzAWMYH4RBCpD5IAzSiCwPN6AtUwuMCRmALs8AIijBDKT6GV2MgRgnw/wNk0cOLwZsCvD5GT28qBsGZKcD5PhH9gayn3FGI8xPxPp5EKcDmIm48gWuaGYg1c8YBlAaBgDaIMjhcRQ1HgAAAABJRU5ErkJggg==", "iron_bars": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAOUlEQVR42mNgAIKysrL/MTEx/xmggFQ+A4jj5OT0nyw+yDRKMNg0SjADyCmUYMrDYNSA0YQ0KBISAOyGY2D39AaVAAAAAElFTkSuQmCC", "lava": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAkUlEQVR42pWTsRGAMAwDNQI1A1AwCMdMmSsDMQUtXArnlKA4plABxn+ydCAf68O60lbVz4rSvlSVZ6jlO58hSAPgZdMIwIKRIg7UO7AdLwN2x7MPQKk/zwBlD2pZQdlZ42BW0zQDNYyc1QBGAUWchQC83DcG7z4vWPses+pGUHONUdp8koJUB17nkf8BfzpXmbwihivxC+qI8gAAAABJRU5ErkJggg==", "mossy_bricks": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAArUlEQVR42pWTOxLDIAxE9yZuU1C5dkWZ3h21738DMhvPziiyQKRYf0ASvEXgvI5OtdYeeu1bOE4xh/M43qVTtdaHGODHmMw3c0opd4EomWLAaE4LgA+JCZQdy+YhHjHpOxKTvRfQdojimYUn7sgTZAEzT7gAxCU2++8V+YLROVOWOfLkW2C2zdkxyjP8w5z2gT/vFR/gmTJPbPxPH6jiCpJtf2SXJ/MEM96VHvkAICK6rgufgmEAAAAASUVORK5CYII=", "planks": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAaElEQVR42mMojzD7Tyy20pbFEGMIc9D6j4xBikAYXRwmhy7GgE0hOgbZhNMAmI3kYgZi/IkPMxDjT3xhxIAuSMgA2ocBqWmCgRh/4ksTDKT4F6sBNA0DYtIEAzHOJCkdYDMAlhdokg4A6T26dsOX89cAAAAASUVORK5CYII=", "stonetexture": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAeElEQVQokb2Ruw3AIAxED8QMFMxA4YEYmikoPEUKJMt84hBFynU+29I7nSulYFGtlYi2fmitrQsA2k8pyei318azyzmf/IiCsBrc2h8yTHkEXfu+Lx7RRR8yGNzaHzIwc4zR4MHUg1wb+q0HZsY999wDzui7Xme4AGc4SMag2iWdAAAAAElFTkSuQmCC", "torch": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMElEQVR42mNgGAWDHPy/kfUfhMk24MUEPcoMKI8w+x/moDVqwNA2wEpb9j8I41MDANsUKb1MN6XHAAAAAElFTkSuQmCC"};</script>
+<script>
 'use strict';
 // textures & blocks
 const TEX_NAMES = ['stonetexture', 'mossy_bricks', 'cracked_bricks', 'floor_tiles', 'chiseled_stone',
@@ -27,7 +200,10 @@ def(EXIT, { shape: 'none', opaque: false, solid: false, light: 15 }); // the por
 // text (all of it lives in text.json)
 let TEXT = null;
 const fmt = (str, vars = {}) => str.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m));
+// the single-file build (build-itch.sh) bakes the text and textures into the page as DC_TEXT and DC_IMG, so it
+// runs straight from disk; the normal build fetches them
 async function loadText() {
+  if (window.DC_TEXT) { TEXT = window.DC_TEXT; return; }
   const r = await fetch('text.json');
   if (!r.ok) throw new Error('text.json');
   TEXT = await r.json();
@@ -42,9 +218,16 @@ function mulberry32(a) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
-// ?seed=N repeats a run, ?level=N starts on floor N (1-5)
+// ?seed=N repeats a run, ?level=N starts on floor N (1-20)
 const params = new URLSearchParams(location.search);
-const BASE_SEED = params.has('seed') ? (parseInt(params.get('seed'), 10) || 1) : ((Math.random() * 1e9) | 0);
+// Saved progress: the floor you're on (as it was when you entered it), your gold, kills, gun and time, and the seed,
+// so you come back to the very same dungeon. It's written whenever a floor starts or is cleared. ?seed or ?level in
+// the address starts a separate run instead, and leaves the save alone.
+const SAVE_KEY = 'dungeoncraft.save', useSave = !params.has('seed') && !params.has('level');
+let SAVE = null;
+try { if (useSave) SAVE = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null'); } catch (e) { /* private mode */ }
+const newSeed = () => (Math.random() * 1e9) | 0;
+let BASE_SEED = params.has('seed') ? (parseInt(params.get('seed'), 10) || 1) : SAVE && SAVE.seed ? SAVE.seed : newSeed();
 let SEED = BASE_SEED, rand = mulberry32(SEED);
 function reseed(s) { SEED = s | 0; rand = mulberry32(SEED); }
 const ri = (a, b) => a + Math.floor(rand() * (b - a + 1));
@@ -91,6 +274,7 @@ const dirMeta = (dx, dz) => (dx > 0 ? 1 : dx < 0 ? 2 : dz > 0 ? 3 : 4);
 let gold = 0;
 let spawn = { x: 40.5, y: 4, z: 40.5 };
 let healthSpots = []; // [x, z] cells where a health crystal floats when the floor starts
+let chestSpots = [];  // [x, z, dx, dz]: a chest in cell x, z with its back to the wall in direction dx, dz
 
 // the twenty floors
 // mix: the share of each creature on the floor. Every kind listed is guaranteed to appear at least once (see
@@ -118,9 +302,23 @@ const LEVELS = [
   { rooms: 11, enemies: 26, mix: [['warden', 0.15], ['brute', 0.15], ['ghoul', 0.1], ['bat', 0.1], ['bloater', 0.1], ['cultist', 0.1], ['spitter', 0.1], ['gorehorn', 0.1], ['shade', 0.05], ['gravecaller', 0.05]], dark: 0.4 },
   { rooms: 7, enemies: 14, mix: [['ghoul', 0.2], ['cultist', 0.15], ['warden', 0.15], ['shade', 0.15], ['gorehorn', 0.1], ['bat', 0.1], ['spitter', 0.1], ['bloater', 0.05]], dark: 0.2, boss: true },
 ];
-const START_LEVEL = Math.max(0, Math.min(LEVELS.length - 1, (parseInt(params.get('level'), 10) || 1) - 1));
+let START_LEVEL = Math.max(0, Math.min(LEVELS.length - 1, SAVE ? SAVE.level | 0 : (parseInt(params.get('level'), 10) || 1) - 1));
 const MAX_HP = 100;
-const GUN = { dmg: 34, rate: 0.17, mag: 12, reload: 1.15, range: 64 };
+// the guns: you start with the revolver; the rest come out of chests, and taking one swaps it for what you carry
+// dmg per bullet (per pellet for the shotgun), rate = seconds between shots, spread = cone half-width in radians;
+// pellets = shots per trigger pull; bloom = extra spread per shot while the trigger is held; pierce = enemies one
+// bullet passes through (and it punches through shields); scope = right mouse zooms; rocket = fires a rocket that
+// explodes (blast radius); action = time to work the pump or bolt after a shot; kick = how hard the gun jumps
+const WEAPONS = {
+  revolver: { dmg: 34, rate: 0.17, mag: 12, reload: 1.15, range: 64, spread: 0.002, kick: 1, sound: 'shot', muzzle: -0.3 },
+  pistol: { dmg: 27, rate: 0.11, mag: 18, reload: 0.95, range: 56, spread: 0.004, kick: 0.6, sound: 'pistol', muzzle: -0.15 },
+  shotgun: { dmg: 14, pellets: 9, rate: 0.85, mag: 6, reload: 1.8, range: 28, spread: 0.065, kick: 1.8, sound: 'shotgun', action: 0.5, muzzle: -0.47 },
+  ak47: { dmg: 21, rate: 0.095, mag: 30, reload: 1.9, range: 60, spread: 0.005, bloom: 0.0035, kick: 0.55, sound: 'ak', muzzle: -0.46 },
+  sniper: { dmg: 150, rate: 1.25, mag: 5, reload: 2.2, range: 120, spread: 0.035, pierce: 3, scope: true, kick: 2, sound: 'sniper', action: 0.7, muzzle: -0.62 },
+  rpg: { dmg: 170, rate: 0.6, mag: 1, reload: 2.4, rocket: true, blast: 3.6, spread: 0.004, kick: 2, sound: 'launch', muzzle: -0.42 },
+};
+// which guns a chest can hold, from which floor (0-based), and how often
+const CHEST_GUNS = [['pistol', 0, 3], ['shotgun', 0, 3], ['ak47', 2, 2.5], ['sniper', 2, 2], ['rpg', 4, 1.2]];
 
 // dungeon generator
 const FY = 3; // floor height of every room
@@ -315,6 +513,25 @@ function generateDungeon(cfg) {
     for (let tries = 0; tries < 30; tries++) {
       const x = ri(r.x + 1, r.x + r.w - 2), z = ri(r.z + 1, r.z + r.d - 2);
       if (walk[z * WX + x] && spawnDist[z * WX + x] > 0) { healthSpots.push([x, z]); break; }
+    }
+  }
+
+  // ---- treasure chests, backed against a room wall: one on every floor, often two, never two in one room
+  chestSpots = [];
+  const want = 1 + (rand() < 0.3 + cfg.rooms * 0.04 ? 1 : 0);
+  const pool = rooms.filter(r => r !== spawnRoom);
+  for (let k = pool.length - 1; k > 0; k--) { const j = Math.floor(rand() * (k + 1)); [pool[k], pool[j]] = [pool[j], pool[k]]; }
+  for (const r of pool) {
+    if (chestSpots.length >= want) break;
+    for (let tries = 0; tries < 30; tries++) {
+      const [x, z, dx, dz] = pick(perimeter(r)), c = z * WX + x;
+      if (!walk[c] || spawnDist[c] <= 0 || getB(x, fy + 1, z) !== AIR || !opaqueAt(x + dx, fy + 1, z + dz)) continue;
+      if (!walkAt(x - dx + 0.5, z - dz + 0.5)) continue;                       // room to stand in front of it
+      if (r === exitRoom && Math.hypot(x - ex, z - ez) < 4) continue;
+      if (healthSpots.some(([hx, hz]) => hx === x && hz === z)) continue;
+      chestSpots.push([x, z, dx, dz]);
+      walk[c] = 0; // creatures path round it
+      break;
     }
   }
   return spawnDist[ez * WX + ex] > 0;
@@ -601,7 +818,7 @@ function loadImage(name) {
     const img = new Image();
     img.onload = () => res(img);
     img.onerror = () => rej(new Error('missing img/' + name + '.png'));
-    img.src = 'img/' + name + '.png';
+    img.src = (window.DC_IMG && window.DC_IMG[name]) || 'img/' + name + '.png';
   });
 }
 
@@ -872,6 +1089,11 @@ function forEachBox(b, fn) {
         const bs = boxesFor(getB(x, y, z), x, y, z);
         if (bs) for (const bb of bs) fn(bb);
       }
+  // chests are solid too: you bump into them and can hop on top
+  for (const c of chests) {
+    const q = c.box;
+    if (q[0] <= b[3] && q[3] >= b[0] && q[1] <= b[4] && q[4] >= b[1] && q[2] <= b[5] && q[5] >= b[2]) fn(q);
+  }
 }
 const entBox = (e, x = e.x, y = e.y, z = e.z) => [x - e.w, y, z - e.w, x + e.w, y + e.h, z + e.w];
 function overlaps(a, b) {
@@ -963,7 +1185,11 @@ function rayBox(o, d, b) {
 let state = 'menu';
 function setState(s) { state = s; document.body.dataset.state = s; }
 let level = 0, fresh = false, kills = 0, levelStart = { gold: 0, kills: 0 }, levelTime = 0, totalTime = 0;
-let ammo = GUN.mag, fireCd = 0, reloadT = 0, recoil = 0, muzzleT = 0, muzzleRot = 0, mouseDown = false;
+let weapon = 'revolver', gun = WEAPONS.revolver;
+let ammo = gun.mag, fireCd = 0, reloadT = 0, recoil = 0, muzzleT = 0, muzzleRot = 0, mouseDown = false;
+// equipT: raising a new gun; actionT: working the pump or bolt; bloom: the AK's growing spread; aimK: scope zoom
+let equipT = 0, actionT = 0, bloom = 0, aimK = 0, aimHeld = false;
+let chests = [], rockets = [];
 let gunBob = 0, gunSprint = 0, hitT = 0, sealedMsgT = 0;
 let enemies = [], fireballs = [], particles = [], pickups = [], boss = null;
 const safe = { x: 0, y: 0, z: 0 }; // the last spot on solid ground away from lava
@@ -1320,12 +1546,12 @@ function explode(e) {
   killEnemy(e, false);
 }
 
-function damageEnemy(e, dmg, dir) {
+function damageEnemy(e, dmg, dir, kbMul = 1) {
   if (e.stun > 0) dmg *= 1.5; // a dazed gorehorn is wide open
   e.hp -= dmg; e.hurt = 0.1;
   alertEnemy(e);
   const kb = e === boss || e.rush > 0 ? 0 : e.type === 'brute' || e.type === 'gorehorn' ? 1.2 : e.type === 'warden' ? 1.6 : e.type === 'bat' ? 5 : 3.5;
-  e.vx += dir[0] * kb; e.vz += dir[2] * kb;
+  e.vx += dir[0] * kb * kbMul; e.vz += dir[2] * kb * kbMul;
   if (e.hp <= 0) killEnemy(e, true);
   else {
     sfx('ehurt', e.k.pitch, volAt(e));
@@ -1443,58 +1669,223 @@ function lookDir() {
 }
 function eyePos() { return [P.x, P.y + P.eye, P.z]; }
 
+const EQUIP = 0.55;
+// switch guns; anim = lower the old one and bring the new one up (otherwise it's simply in your hand)
+function setWeapon(id, anim = false) {
+  weapon = id; gun = WEAPONS[id];
+  ammo = gun.mag; reloadT = 0; fireCd = 0; actionT = 0; bloom = 0; aimK = 0; recoil = 0; muzzleT = 0;
+  equipT = anim ? EQUIP : 0;
+}
 function startReload() {
-  if (reloadT > 0 || ammo >= GUN.mag) return;
-  reloadT = GUN.reload;
+  if (reloadT > 0 || ammo >= gun.mag || equipT > 0) return;
+  reloadT = gun.reload; actionT = 0;
   sfx('reload');
 }
 function updateGun(dt) {
   fireCd = Math.max(0, fireCd - dt);
   recoil *= Math.exp(-dt * 14);
   muzzleT = Math.max(0, muzzleT - dt);
+  bloom *= Math.exp(-dt * (mouseDown ? 1.5 : 6));
+  if (equipT > 0) equipT = Math.max(0, equipT - dt);
+  if (actionT > 0) { // the pump racks / the bolt cycles a moment after the shot
+    const was = actionT; actionT = Math.max(0, actionT - dt);
+    if (was > gun.action * 0.6 && actionT <= gun.action * 0.6) sfx(weapon === 'shotgun' ? 'pump' : 'bolt');
+  }
   if (hitT > 0 && (hitT -= dt) <= 0) crosshairEl.classList.remove('hit', 'head');
-  if (reloadT > 0 && (reloadT -= dt) <= 0) { reloadT = 0; ammo = GUN.mag; }
+  if (reloadT > 0 && (reloadT -= dt) <= 0) { reloadT = 0; ammo = gun.mag; }
   if (ammo === 0 && reloadT === 0 && fireCd === 0) startReload();
-  if (mouseDown && reloadT === 0 && fireCd === 0 && ammo > 0) fire();
+  // the sniper's scope: hold right mouse
+  const aimWant = aimHeld && gun.scope && reloadT === 0 && equipT === 0 && !P.sprint ? 1 : 0;
+  aimK += (aimWant - aimK) * Math.min(1, dt * 12);
+  if (mouseDown && reloadT === 0 && fireCd === 0 && equipT === 0 && ammo > 0) fire();
 }
+// a warden's shield stops body shots from the front; aim for the head, flank it, or catch it mid-swing
+const shieldBlocks = (e, d, head) => e.k.shield && !head && !(e.atk > 0 || e.strike > 0) &&
+  -(d[0] * Math.sin(e.yaw) + d[2] * Math.cos(e.yaw)) / (Math.hypot(d[0], d[2]) || 1) > 0.35;
 function fire() {
-  ammo--; fireCd = GUN.rate; recoil = 1; muzzleT = 0.07; muzzleRot = Math.random() * Math.PI;
-  sfx('shot');
-  const o = eyePos(), d = lookDir();
+  const G = gun;
+  ammo--; fireCd = G.rate; recoil = G.kick; muzzleT = 0.07; muzzleRot = Math.random() * Math.PI;
+  if (G.action) actionT = G.action;
+  sfx(G.sound);
+  const o = eyePos(), aim = lookDir();
   const moving = Math.hypot(P.vx, P.vz) > 1;
-  const spread = !P.onGround ? 0.03 : P.sprint ? 0.025 : moving ? 0.008 : 0.002;
-  for (let a = 0; a < 3; a++) d[a] += (Math.random() - 0.5) * 2 * spread;
-  const l = Math.hypot(d[0], d[1], d[2]); d[0] /= l; d[1] /= l; d[2] /= l;
+  let spread = G.spread + (!P.onGround ? 0.03 : P.sprint ? 0.025 : moving ? 0.008 : 0);
+  if (G.scope) spread = lerp(spread, moving ? 0.004 : 0, ease(aimK)); // dead on through the scope
+  if (G.bloom) { spread += bloom; bloom = Math.min(0.03, bloom + G.bloom); }
+  const loud = G.rocket || G.scope ? 26 : 16;
+  for (const e of enemies) if (!e.dead && !e.alert && Math.hypot(e.x - P.x, e.z - P.z) < loud) alertEnemy(e, false); // gunfire carries
+  if (G.rocket) { launchRocket(o, aim); return; }
 
-  const wall = raycast(o, d, GUN.range, shotStop);
-  let bt = wall ? wall.t : GUN.range, hitE = null, head = false;
+  let hit = false, head = false, pitch = 1, ric = false;
+  for (let n = 0; n < (G.pellets || 1); n++) {
+    const d = aim.slice();
+    for (let a = 0; a < 3; a++) d[a] += (Math.random() - 0.5) * 2 * spread;
+    const l = Math.hypot(d[0], d[1], d[2]); d[0] /= l; d[1] /= l; d[2] /= l;
+    const r = shootRay(o, d, G);
+    if (r.hit) { hit = true; head = head || r.head; pitch = r.pitch; }
+    ric = ric || r.ric;
+  }
+  if (hit) {
+    crosshairEl.classList.add('hit'); crosshairEl.classList.toggle('head', head); hitT = 0.12;
+    sfx('flesh', pitch);
+  } else if (ric && Math.random() < 0.3) sfx('ricochet');
+}
+// one bullet (or pellet): it stops at the first creature it meets, or passes through up to `pierce` of them
+function shootRay(o, d, G) {
+  const wall = raycast(o, d, G.range, shotStop), wt = wall ? wall.t : G.range;
+  const hits = [];
   for (const e of enemies) {
     if (e.dead) continue;
     const hw = e.w * (e.w > 0.4 ? 0.55 : 0.75), K = e.k, y0 = e.y + liftOf(e);
     const th = rayBox(o, d, [e.x - hw, y0 + K.head, e.z - hw, e.x + hw, y0 + e.h, e.z + hw]);
     const tb = rayBox(o, d, [e.x - e.w, y0, e.z - e.w, e.x + e.w, y0 + K.head, e.z + e.w]);
-    if (th < bt) { bt = th; hitE = e; head = true; }
-    if (tb < bt) { bt = tb; hitE = e; head = false; }
+    const t = Math.min(th, tb);
+    if (t < wt) hits.push({ e, t, head: th <= tb });
   }
-  const hp = [o[0] + d[0] * bt, o[1] + d[1] * bt, o[2] + d[2] * bt];
-  // a warden's shield stops body shots from the front; aim for the head, flank it, or catch it mid-swing
-  if (hitE && hitE.k.shield && !head && !(hitE.atk > 0 || hitE.strike > 0) &&
-      -(d[0] * Math.sin(hitE.yaw) + d[2] * Math.cos(hitE.yaw)) / (Math.hypot(d[0], d[2]) || 1) > 0.35) {
-    burst(hp, [1, 0.85, 0.55], 8, 3.5, 1, [-d[0], -d[1], -d[2]], 0.25);
-    sfx('clang');
-    alertEnemy(hitE);
-  } else if (hitE) {
-    damageEnemy(hitE, GUN.dmg * (head ? 2 : 1), d);
-    burst(hp, hitE.k.blood, head ? 10 : 6, 2.5, hitE === boss ? 1 : 0, [-d[0], -d[1], -d[2]]);
-    crosshairEl.classList.add('hit'); crosshairEl.classList.toggle('head', head); hitT = 0.12;
-    sfx('flesh', hitE.k.pitch);
-  } else if (wall) {
-    burst(hp, [1, 0.8, 0.45], 6, 3, 1, wall.n, 0.25);
-    burst(hp, [0.4, 0.37, 0.34], 4, 1.5, 0, wall.n);
-    if (Math.random() < 0.3) sfx('ricochet');
+  hits.sort((a, b) => a.t - b.t);
+  const res = { hit: false, head: false, pitch: 1, ric: false }, at = t => [o[0] + d[0] * t, o[1] + d[1] * t, o[2] + d[2] * t];
+  let end = wt, stopped = false;
+  for (let k = 0; k < Math.min(hits.length, G.pierce || 1); k++) {
+    const { e, t, head } = hits[k], hp = at(t);
+    if (!G.pierce && shieldBlocks(e, d, head)) {
+      burst(hp, [1, 0.85, 0.55], G.pellets ? 3 : 8, 3.5, 1, [-d[0], -d[1], -d[2]], 0.25);
+      sfx('clang'); alertEnemy(e);
+      end = t; stopped = true; break;
+    }
+    const fall = G.pellets ? 1 - clamp01((t - 5) / 18) * 0.6 : 1; // shot loses its bite with range
+    damageEnemy(e, G.dmg * (head ? 2 : 1) * fall, d, G.pellets ? 0.3 : G.pierce ? 1.6 : 1);
+    burst(hp, e.k.blood, G.pellets ? 3 : head ? 10 : 6, 2.5, e === boss ? 1 : 0, [-d[0], -d[1], -d[2]]);
+    res.hit = true; res.head = res.head || head; res.pitch = e.k.pitch;
+    end = t;
+    if (!G.pierce || k === G.pierce - 1) stopped = true;
   }
-  // gunfire carries
-  for (const e of enemies) if (!e.dead && !e.alert && Math.hypot(e.x - P.x, e.z - P.z) < 16) alertEnemy(e, false);
+  if (!stopped && wall) {
+    end = wt;
+    const hp = at(wt);
+    burst(hp, [1, 0.8, 0.45], G.pellets ? 2 : 6, 3, 1, wall.n, 0.25);
+    burst(hp, [0.4, 0.37, 0.34], G.pellets ? 2 : 4, 1.5, 0, wall.n);
+    res.ric = true;
+  }
+  if (G.pierce) // the sniper round leaves a brief streak of light
+    for (let s = 1.2; s < end && particles.length < 600; s += 0.7)
+      particles.push({ x: o[0] + d[0] * s, y: o[1] + d[1] * s - 0.05, z: o[2] + d[2] * s, vx: 0, vy: 0.3, vz: 0,
+        life: 0.12 + s * 0.002, size: 0.018, col: [1, 0.92, 0.75], em: 1 });
+  return res;
+}
+
+// rockets: they leave the tube slowly, burn up to speed, and go off against the first thing they touch
+function launchRocket(o, d) {
+  rockets.push({ x: o[0] + d[0] * 0.5, y: o[1] + d[1] * 0.5 - 0.06, z: o[2] + d[2] * 0.5, d: d.slice(), t: 0 });
+  burst([o[0] + d[0] * 0.9, o[1] + d[1] * 0.9 - 0.1, o[2] + d[2] * 0.9], [0.5, 0.48, 0.45], 10, 1.5, 0, d, 0.8);
+}
+function updateRockets(dt) {
+  for (let k = rockets.length - 1; k >= 0; k--) {
+    const r = rockets[k], d = r.d;
+    r.t += dt;
+    const step = lerp(14, 32, Math.min(1, r.t / 0.35)) * dt;
+    // first wall or creature along this step
+    const wall = raycast([r.x, r.y, r.z], d, step, shotStop);
+    let t = wall ? wall.t : Infinity;
+    for (const e of enemies) {
+      if (e.dead) continue;
+      const y0 = e.y + liftOf(e), m = 0.12;
+      const te = rayBox([r.x, r.y, r.z], d, [e.x - e.w - m, y0 - m, e.z - e.w - m, e.x + e.w + m, y0 + e.h + m, e.z + e.w + m]);
+      if (te <= step && te < t) t = te;
+    }
+    if (t <= step || r.t > 4) {
+      const s = Math.max(0, Math.min(t, step) - 0.08);
+      rockets.splice(k, 1);
+      rocketBlast([r.x + d[0] * s, r.y + d[1] * s, r.z + d[2] * s]);
+      continue;
+    }
+    r.x += d[0] * step; r.y += d[1] * step; r.z += d[2] * step;
+    if (particles.length < 600) { // fire at the tail, a trail of smoke behind
+      particles.push({ x: r.x - d[0] * 0.3, y: r.y - d[1] * 0.3, z: r.z - d[2] * 0.3, vx: 0, vy: 0.2, vz: 0, life: 0.12, size: 0.05, col: [1, 0.6, 0.2], em: 1 });
+      if (Math.random() < 0.7) particles.push({ x: r.x - d[0] * 0.4, y: r.y - d[1] * 0.4, z: r.z - d[2] * 0.4,
+        vx: (Math.random() - 0.5) * 0.4, vy: 2.6 + Math.random() * 0.5, vz: (Math.random() - 0.5) * 0.4, life: 0.6, size: 0.06, col: [0.42, 0.4, 0.38], em: 0 });
+    }
+  }
+}
+function rocketBlast(p) {
+  const R = WEAPONS.rpg.blast, dmg = WEAPONS.rpg.dmg;
+  burst(p, [1, 0.6, 0.2], 50, 7, 1, null, 0.7);
+  burst(p, [0.35, 0.32, 0.3], 26, 3, 0, null, 1.1);
+  blasts.push({ x: p[0], y: p[1], z: p[2], t: 0.45 });
+  sfx('blast', 1, Math.max(0.6, volAt({ x: p[0], z: p[2] })));
+  for (const e of enemies) {
+    if (e.dead) continue;
+    const d = Math.max(0, Math.hypot(e.x - p[0], e.y + liftOf(e) + e.h / 2 - p[1], e.z - p[2]) - e.w);
+    if (d < R) {
+      const n = Math.hypot(e.x - p[0], e.z - p[2]) || 1;
+      damageEnemy(e, dmg * (1 - (d / R) * 0.75), [(e.x - p[0]) / n, 0, (e.z - p[2]) / n], 2);
+    }
+  }
+  // stand too close and you'll feel it too
+  const dp = Math.hypot(P.x - p[0], P.y + 0.9 - p[1], P.z - p[2]);
+  if (dp < R) hurtPlayer(Math.round(35 * (1 - dp / R)));
+  for (const e of enemies) if (!e.dead && !e.alert && Math.hypot(e.x - p[0], e.z - p[2]) < 20) alertEnemy(e, false);
+}
+
+// chests
+// a closed chest sparkles now and then; E opens it (the lid swings up, coins fly); about two times in three a gun
+// rises out of it, otherwise gold and a health crystal. E again swaps the gun for yours, which stays in the chest,
+// so you can always change your mind.
+const CHEST = { w: 0.42, d: 0.3, h: 0.62, open: 0.6, rise: 0.6 };
+function makeChests() {
+  chests = chestSpots.map(([x, z, dx, dz]) => {
+    const cx = x + 0.5 + dx * 0.12, cz = z + 0.5 + dz * 0.12, hx = dx ? CHEST.d : CHEST.w, hz = dx ? CHEST.w : CHEST.d;
+    return { x: cx, z: cz, yaw: Math.atan2(-dx, -dz), box: [cx - hx, FY + 1, cz - hz, cx + hx, FY + 1 + CHEST.h, cz + hz],
+      opened: false, t: 0, gun: null, sparkT: Math.random() * 2 };
+  });
+}
+function pickChestGun() {
+  const opts = CHEST_GUNS.filter(([id, from]) => level >= from && id !== weapon);
+  let w = Math.random() * opts.reduce((s, o) => s + o[2], 0);
+  for (const o of opts) if ((w -= o[2]) <= 0) return o[0];
+  return opts[0][0];
+}
+// the chest you're standing at and facing, if any
+function chestTarget() {
+  const f = lookDir();
+  let best = null, bd = 2.0;
+  for (const c of chests) {
+    const dx = c.x - P.x, dz = c.z - P.z, d = Math.hypot(dx, dz);
+    if (d < bd && Math.abs(FY + 1 - P.y) < 1.2 && (dx * f[0] + dz * f[2]) / (d * (Math.hypot(f[0], f[2]) || 1)) > 0.35) { bd = d; best = c; }
+  }
+  return best;
+}
+function interact() {
+  const c = chestTarget();
+  if (!c) return;
+  if (!c.opened) {
+    c.opened = true; c.t = 0;
+    sfx('chest');
+    burst([c.x, FY + 1.6, c.z], [1, 0.82, 0.3], 24, 2.6, 1, [0, 1, 0], 0.9);
+    if (Math.random() < Math.min(0.85, 0.62 + level * 0.012)) c.gun = pickChestGun();
+    else {
+      const g = 4 + level;
+      gold += g; c.gold = true;
+      pickups.push({ x: c.x, y: FY + 2.0, z: c.z, t: 0, hp: 25 });
+      showMessage(fmt(TEXT.messages.chestGold, { gold: g }));
+      updateHud();
+    }
+  } else if (c.gun && c.t > CHEST.open + CHEST.rise * 0.6) {
+    const old = weapon;
+    setWeapon(c.gun, true);
+    c.gun = old; c.t = CHEST.open + CHEST.rise * 0.3; // yours drops in and rises back out
+    sfx('equip');
+    showMessage(fmt(TEXT.messages.gunTaken, { gun: TEXT.weapons[weapon] }), 1800);
+  }
+}
+function updateChests(dt) {
+  for (const c of chests) {
+    if (c.opened) { c.t += dt; continue; }
+    if ((c.sparkT -= dt) <= 0 && particles.length < 600) { // a glint of gold at the seam of the lid
+      c.sparkT = 0.5 + Math.random() * 1.2;
+      particles.push({ x: c.x + (Math.random() - 0.5) * 0.6, y: FY + 1 + CHEST.h * 0.62, z: c.z + (Math.random() - 0.5) * 0.4,
+        vx: 0, vy: 1.4, vz: 0, life: 0.5, size: 0.025, col: [1, 0.85, 0.4], em: 1 });
+    }
+  }
 }
 
 // fireballs, particles, pickups
@@ -1577,7 +1968,7 @@ const DEATH = { fall: 1.0, fade: [1.2, 2.6], end: 3.0 };
 function startDeath() {
   setState('dying');
   deathT = 0;
-  mouseDown = false;
+  mouseDown = false; aimHeld = false; aimK = 0;
   for (const k in keys) keys[k] = false;
   P.vx *= 0.3; P.vz *= 0.3;
   death.eye = P.eye; death.pitch = P.pitch;
@@ -1695,6 +2086,26 @@ function finishCutscene() {
 }
 const fadeEl = document.getElementById('fade');
 
+// progress
+// a save is a floor to start on with what you had when you got there
+function saveProgress(s) {
+  if (!useSave) return;
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify({ seed: BASE_SEED, ...s })); } catch (e) { /* private mode */ }
+}
+function clearProgress() { try { localStorage.removeItem(SAVE_KEY); } catch (e) { /* private mode */ } }
+const hasProgress = () => { try { return !!localStorage.getItem(SAVE_KEY); } catch (e) { return false; } };
+// wipe the save and start over from floor 1 in a brand-new dungeon
+function resetProgress() {
+  clearProgress();
+  if (!params.has('seed')) BASE_SEED = newSeed();
+  gold = 0; kills = 0; totalTime = 0; weapon = 'revolver'; START_LEVEL = 0;
+  if (document.pointerLockElement) document.exitPointerLock();
+  loadLevel(0);
+  setState('menu');
+  fadeEl.style.opacity = 0;
+  updateOverlay();
+}
+
 // levels & flow
 function loadLevel(n) {
   level = n;
@@ -1706,14 +2117,15 @@ function loadLevel(n) {
   computeLight();
   buildAllChunks();
   collectFlames();
-  enemies = []; fireballs = []; particles = []; pools = []; blasts = []; acidT = 0; boss = null; portalBoost = 0;
+  enemies = []; fireballs = []; particles = []; pools = []; blasts = []; rockets = []; acidT = 0; boss = null; portalBoost = 0;
   pickups =healthSpots.map(([x, z]) => ({ x: x + 0.5, y: FY + 1.6, z: z + 0.5, t: rand() * 6, hp: 25 }));
+  makeChests();
   spawnEnemies(cfg);
   respawn();
   P.hp = MAX_HP;
-  ammo = GUN.mag; reloadT = 0; fireCd = 0; recoil = 0; muzzleT = 0;
+  setWeapon(weapon); // the gun you carry comes with you, fully loaded
   levelTime = 0;
-  levelStart = { gold, kills };
+  levelStart = { gold, kills, weapon, time: totalTime };
   flowCell = -1;
   fresh = true;
   updateHud();
@@ -1752,6 +2164,7 @@ function updateEnter(dt) {
 function beginLevel() {
   setState('play'); fresh = false;
   fadeEl.style.background = '#000'; fadeEl.style.opacity = 1; fadeInT = FADE_IN;
+  saveProgress({ level, gold: levelStart.gold, kills: levelStart.kills, weapon: levelStart.weapon, time: levelStart.time });
   const name = TEXT.levelNames[level], newcomers = newKinds(level);
   let intro = fmt(LEVELS[level].boss ? TEXT.bossIntro : TEXT.levelIntro, { n: level + 1, name });
   if (newcomers.length) intro += '\n\n' + fmt(TEXT.newFoes, { names: newcomers.map(t => TEXT.enemyNames[t]).join(', ') });
@@ -1760,10 +2173,12 @@ function beginLevel() {
   updateOverlay();
 }
 function completeLevel() {
-  if (level === LEVELS.length - 1) { startCutscene(); return; }
+  if (level === LEVELS.length - 1) { clearProgress(); startCutscene(); return; } // the run is over
+  // cleared: if you leave now, you come back at the top of the next floor
+  saveProgress({ level: level + 1, gold, kills, weapon, time: totalTime });
   sfx('portal'); sfx('warp');
   setState('warp'); warpT = 0;
-  mouseDown = false;
+  mouseDown = false; aimHeld = false; aimK = 0;
   for (const k in keys) keys[k] = false;
   msgEl.style.opacity = 0;
 }
@@ -1805,7 +2220,16 @@ function updateHud() {
 const hudCache = {};
 function setText(id, v) { if (hudCache[id] !== v) { hudCache[id] = v; $(id).textContent = v; } }
 function updateHudLive() {
-  setText('ammonum', fmt(TEXT.hud.ammo, { ammo, mag: GUN.mag }));
+  setText('gunname', TEXT.weapons[weapon]);
+  setText('ammonum', fmt(TEXT.hud.ammo, { ammo, mag: gun.mag }));
+  // the prompt under the crosshair when you're at a chest
+  const c = state === 'play' && locked ? chestTarget() : null;
+  setText('prompt', !c ? '' : !c.opened ? TEXT.prompts.open
+    : c.gun && c.t > CHEST.open + CHEST.rise * 0.6 ? fmt(TEXT.prompts.take, { gun: TEXT.weapons[c.gun] }) : '');
+  // the scope: a black ring closes in as you zoom, and the gun and plain crosshair get out of the way
+  const sc = clamp01((aimK - 0.55) / 0.45);
+  $('scope').style.opacity = sc.toFixed(3);
+  crosshairEl.style.opacity = sc > 0 ? 0 : '';
   setText('ammolbl', reloadT > 0 ? TEXT.hud.reloading : ammo === 0 ? TEXT.hud.reloadHint : '');
   const showBoss = bossAlive() && boss.alert;
   $('boss').style.display = showBoss ? 'block' : 'none';
@@ -1854,8 +2278,21 @@ function buildComfort() {
   reset.addEventListener('click', () => { Object.assign(OPT, OPT_DEFAULT); saveOpts(); setVolume(); buildComfort(); });
   box.append(reset);
 }
-// clicks on the settings must not count as "click to play"
-for (const ev of ['click', 'mousedown', 'pointerdown']) $('comfort').addEventListener(ev, e => e.stopPropagation());
+// clicks on the settings (or the reset button) must not count as "click to play"
+for (const ev of ['click', 'mousedown', 'pointerdown']) for (const id of ['comfort', 'resetbtn']) $(id).addEventListener(ev, e => e.stopPropagation());
+// reset progress: the first click arms it ("click again"), a second within a few seconds wipes the save
+let resetArmed = false, resetTimer = 0;
+$('resetbtn').addEventListener('click', () => {
+  if (!resetArmed) {
+    resetArmed = true; updateOverlay();
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => { resetArmed = false; updateOverlay(); }, 3000);
+    return;
+  }
+  resetArmed = false; clearTimeout(resetTimer);
+  resetProgress();
+  sfx('portal');
+});
 let overlayGuard = 0;
 function updateOverlay() {
   const overlay = $('overlay'), btn = $('playbtn');
@@ -1868,7 +2305,13 @@ function updateOverlay() {
     $('title').textContent = title; statusEl.textContent = status; btn.textContent = button;
     btn.style.display = ''; $('controls').style.display = $('comfort').style.display = controls ? '' : 'none';
   };
-  if (state === 'menu') set(TEXT.title, fmt(TEXT.intro, { levels: LEVELS.length }), TEXT.play, true);
+  // with a save, the menu offers to carry on, and both the menu and the pause screen offer to start over
+  const saved = useSave && hasProgress() && (state === 'menu' || state === 'play');
+  $('resetbtn').style.display = saved ? '' : 'none';
+  if (!saved) resetArmed = false;
+  $('resetbtn').textContent = resetArmed ? TEXT.resetConfirm : TEXT.reset;
+  if (state === 'menu' && saved) set(TEXT.title, fmt(TEXT.continueIntro, { n, name, gold, kills }), fmt(TEXT.continue, { n }), true);
+  else if (state === 'menu') set(TEXT.title, fmt(TEXT.intro, { levels: LEVELS.length }), TEXT.play, true);
   else if (state === 'play') set(TEXT.pausedTitle, fmt(TEXT.levelLabel, stats), TEXT.resume, true);
   else if (state === 'done') set(TEXT.doneTitle, fmt(TEXT.doneStats, stats), TEXT.next, false);
   else if (state === 'dead') set(TEXT.deadTitle, fmt(TEXT.deadStats, stats), TEXT.retry, false);
@@ -1953,7 +2396,18 @@ function sfx(name, mat = 'stone', vol = 1) {
     case 'snort': noise(0.35, 420 * p, 0.25, 'bandpass', 1.5); noise(0.3, 380 * p, 0.2, 'bandpass', 1.5, 0.4); break;
     case 'rush': tone(90 * p, 0.6, 0.1, 'sawtooth', 0, 1.6); noise(0.6, 300, 0.25, 'lowpass'); break;
     case 'blink': tone(1500, 0.25, 0.04, 'sine', 0, 0.3); noise(0.2, 5000, 0.06, 'highpass'); break;
-    case 'warp': tone(220, 1.4, 0.05, 'sine', 0, 4); tone(330, 1.4, 0.035, 'triangle', 0.05, 4); noise(1.4, 1800, 0.08, 'bandpass', 0.7); break;
+    case 'pistol': noise(0.06, 3000, 0.25, 'bandpass', 0.7); noise(0.18, 750, 0.22, 'lowpass'); tone(170, 0.08, 0.1, 'square', 0, 0.4); break;
+    case 'shotgun': noise(0.12, 1800, 0.5, 'bandpass', 0.5); noise(0.55, 280, 0.55, 'lowpass'); tone(65, 0.3, 0.25, 'sine', 0, 0.4); break;
+    case 'pump': noise(0.07, 2400, 0.16, 'highpass'); noise(0.07, 1700, 0.18, 'highpass', 1, 0.16); break;
+    case 'ak': noise(0.05, 2800, 0.3, 'bandpass', 0.8); noise(0.2, 620, 0.28, 'lowpass'); tone(125, 0.08, 0.12, 'square', 0, 0.4); break;
+    case 'sniper': noise(0.1, 2200, 0.55, 'bandpass', 0.5); noise(0.9, 240, 0.45, 'lowpass'); tone(90, 0.4, 0.22, 'sawtooth', 0, 0.3);
+      noise(0.7, 420, 0.12, 'lowpass', 1, 0.28); break; // and its echo down the halls
+    case 'bolt': noise(0.05, 2600, 0.15, 'highpass'); tone(700, 0.04, 0.04, 'square', 0.12); noise(0.05, 2000, 0.16, 'highpass', 1, 0.24); break;
+    case 'launch': noise(0.6, 900, 0.35, 'bandpass', 0.6); tone(180, 0.5, 0.12, 'sawtooth', 0, 0.35); noise(0.25, 300, 0.3, 'lowpass'); break;
+    case 'chest': tone(130, 0.45, 0.07, 'sawtooth', 0, 1.7); noise(0.3, 500, 0.12, 'lowpass');
+      [880, 1320, 1760].forEach((f, k) => tone(f, 0.35, 0.05, 'triangle', 0.35 + k * 0.08)); break;
+    case 'equip': noise(0.08, 2400, 0.18, 'highpass'); tone(620, 0.06, 0.05, 'square', 0.14); noise(0.06, 1800, 0.15, 'bandpass', 2, 0.24); break;
+    case 'warp':tone(220, 1.4, 0.05, 'sine', 0, 4); tone(330, 1.4, 0.035, 'triangle', 0.05, 4); noise(1.4, 1800, 0.08, 'bandpass', 0.7); break;
     case 'raise': tone(110, 1.0, 0.06, 'triangle', 0, 2); tone(165, 1.0, 0.04, 'sine', 0.1, 2); noise(0.8, 300, 0.12, 'lowpass'); break;
   }
 }
@@ -1983,12 +2437,12 @@ $('overlay').addEventListener('click', () => {
   lock();
   if (state === 'menu') enterFloor(() => { if (!fresh) loadLevel(START_LEVEL); beginLevel(); });
   else if (state === 'done') enterFloor(() => { loadLevel(level + 1); beginLevel(); });
-  else if (state === 'dead') enterFloor(() => { gold = levelStart.gold; kills = levelStart.kills; loadLevel(level); beginLevel(); });
-  else if (state === 'won') enterFloor(() => { gold = 0; kills = 0; totalTime = 0; loadLevel(0); beginLevel(); });
+  else if (state === 'dead') enterFloor(() => { gold = levelStart.gold; kills = levelStart.kills; weapon = levelStart.weapon; loadLevel(level); beginLevel(); });
+  else if (state === 'won') enterFloor(() => { gold = 0; kills = 0; totalTime = 0; weapon = 'revolver'; loadLevel(0); beginLevel(); });
 });
 document.addEventListener('pointerlockchange', () => {
   locked = document.pointerLockElement === canvas;
-  if (!locked) { for (const k in keys) keys[k] = false; mouseDown = false; }
+  if (!locked) { for (const k in keys) keys[k] = false; mouseDown = false; aimHeld = false; }
   updateOverlay();
 });
 document.addEventListener('mousemove', e => {
@@ -1996,11 +2450,16 @@ document.addEventListener('mousemove', e => {
   // some browsers report a huge bogus jump right after locking or on a hitch; a sudden snap of the whole view is
   // one of the worst things for motion sickness, so ignore those
   if (Math.abs(e.movementX) > 250 || Math.abs(e.movementY) > 250) return;
-  const s = OPT.sens * 0.0003;
+  const s = OPT.sens * 0.0003 * lerp(1, 0.28, ease(aimK)); // slower through the scope, so the view stays steady
   P.yaw -= e.movementX * s;
   P.pitch = Math.max(-1.5605, Math.min(1.5605, P.pitch - e.movementY * s));
 });
-canvas.addEventListener('mousedown', e => { if (locked && state === 'play' && e.button === 0) mouseDown = true; });
+canvas.addEventListener('mousedown', e => {
+  if (!locked || state !== 'play') return;
+  if (e.button === 0) mouseDown = true;
+  if (e.button === 2) aimHeld = true;
+});
+document.addEventListener('mouseup', e => { if (e.button === 2) aimHeld = false; });
 // any click or key skips the ending (after a moment, so a stray shot doesn't)
 document.addEventListener('mousedown', () => { if (state === 'cine' && cineT > 1) finishCutscene(); });
 document.addEventListener('mouseup', e => { if (e.button === 0) mouseDown = false; });
@@ -2014,6 +2473,7 @@ document.addEventListener('keydown', e => {
     lastWTap = now;
   }
   if (!e.repeat && e.code === 'KeyR') startReload();
+  if (!e.repeat && e.code === 'KeyE') interact();
   keys[e.code] = true;
   if (e.code === 'Space' || e.code === 'Tab') e.preventDefault();
 });
@@ -2350,6 +2810,34 @@ function drawPortal() {
     ebox(XF.id(), x0 + i * w / nx, y0 + j * h / ny, zc - 0.03, x0 + (i + 1) * w / nx, y0 + (j + 1) * h / ny, zc + 0.03, col, open ? 1 : 0.6);
   }
 }
+// a banded wooden chest; the lid swings up from the back, the inside glows, and the gun rises out and turns slowly
+function drawChest(c) {
+  E.L = Math.max(0.35, getL(Math.floor(c.x), FY + 1, Math.floor(c.z)) / 15); E.flash = false;
+  const base = XF.mul(XF.t(c.x, FY + 1, c.z), XF.ry(c.yaw)), W = CHEST.w, D = CHEST.d, H = CHEST.h * 0.62;
+  const wood = [0.42, 0.25, 0.12], woodD = [0.3, 0.17, 0.08], band = [0.24, 0.24, 0.27];
+  ebox(base, -W, 0, -D, W, H, D, wood);
+  ebox(base, -W - 0.01, 0, -D - 0.01, W + 0.01, 0.05, D + 0.01, woodD);                  // plinth
+  for (const x of [-W * 0.7, W * 0.7]) ebox(base, x - 0.035, -0.005, -D - 0.012, x + 0.035, H + 0.003, D + 0.012, band);
+  const open = c.opened ? ease(c.t / CHEST.open) : 0;
+  if (open > 0) { // the treasure inside lights the underside of the lid
+    ebox(base, -W + 0.04, H - 0.06, -D + 0.04, W - 0.04, H - 0.02, D - 0.04, [1, 0.78, 0.3], c.gold ? 1 : 0.6 * open);
+    if (c.gold) for (let k = 0; k < 7; k++)
+      cbox(base, [-W * 0.7 + k * W * 0.23, H - 0.01, Math.sin(k * 2.3) * D * 0.5], [0.035, 0.012, 0.035], GC.brass, 0.8);
+  }
+  // the lid, hinged along the back top edge
+  const lid = XF.chain(base, XF.t(0, H, -D), XF.rx(-open * 1.95 + (c.opened ? 0 : Math.sin(time * 9 + c.x) * 0.004)));
+  ebox(lid, -W - 0.005, 0, 0, W + 0.005, 0.2, D * 2 + 0.005, wood);
+  ebox(lid, -W + 0.06, 0.2, 0.05, W - 0.06, 0.24, D * 2 - 0.05, woodD);
+  for (const x of [-W * 0.7, W * 0.7]) ebox(lid, x - 0.035, -0.003, -0.01, x + 0.035, 0.248, D * 2 + 0.015, band);
+  cbox(lid, [0, 0.05, D * 2 + 0.012], [0.05, 0.06, 0.012], GC.brass, c.opened ? 0 : 0.25); // lock
+  // the gun on offer, rising out and turning in the air
+  if (c.gun && c.t > CHEST.open * 0.6) {
+    const r = ease((c.t - CHEST.open * 0.6) / CHEST.rise);
+    E.L = 1;
+    const xf = XF.chain(XF.t(c.x, FY + 1 + 0.35 + r * 0.55 + Math.sin(time * 2) * 0.04, c.z), XF.ry(time * 1.2), XF.s(2.3 * (0.3 + 0.7 * r)), XF.t(0, 0, 0.1));
+    gunModel(c.gun, xf, false, IDLE_GUN);
+  }
+}
 function buildWorldEntities(cam) {
   EM.v.length = 0; EM.i.length = 0;
   for (const e of enemies) drawEnemy(e);
@@ -2377,6 +2865,16 @@ function buildWorldEntities(cam) {
     const xf = XF.chain(XF.t(p.x, p.y + Math.sin(p.t * 3) * 0.1, p.z), XF.ry(p.t * 2), XF.rz(Math.PI / 4), XF.rx(Math.PI / 4));
     ebox(xf, -0.11, -0.11, -0.11, 0.11, 0.11, 0.11, [0.95, 0.15, 0.22], 0.7);
   }
+  for (const c of chests) drawChest(c);
+  for (const r of rockets) {
+    E.L = 1;
+    const d = r.d, xf = XF.chain(XF.t(r.x, r.y, r.z), XF.ry(Math.atan2(d[0], d[2])), XF.rx(-Math.asin(d[1])), XF.rz(r.t * 12));
+    cbox(xf, [0, 0, 0], [0.04, 0.04, 0.16], [0.32, 0.36, 0.22]);
+    cbox(xf, [0, 0, 0.19], [0.026, 0.026, 0.04], [0.28, 0.32, 0.2]);
+    cbox(xf, [0, 0, 0.24], [0.01, 0.01, 0.02], GC.steel);
+    for (const a of [0, Math.PI / 2]) cbox(XF.mul(xf, XF.rz(a)), [0, 0, -0.17], [0.07, 0.006, 0.04], GC.oliveD); // fins
+    cbox(xf, [0, 0, -0.24], [0.03, 0.03, 0.06 + Math.random() * 0.04], [1, 0.75, 0.35], 1);         // exhaust
+  }
   for (const p of particles) {
     // a mote right against the lens just reads as a blob
     if (Math.abs(p.x - cam[0]) + Math.abs(p.y - cam[1]) + Math.abs(p.z - cam[2]) < 0.9) continue;
@@ -2386,37 +2884,160 @@ function buildWorldEntities(cam) {
   }
   drawPortal();
 }
-// the revolver, built in view space (x right, y up, looking down -z)
+// the guns, modelled in gun space (x right, y up, the barrel pointing down -z). The same models go in your hands
+// and float above opened chests. st: pump / bolt (0..1 through the action), mag (0..1 dropped), loaded (RPG warhead
+// showing), slide (pistol slide blown back)
+const GC = {
+  wood: [0.36, 0.2, 0.1], woodL: [0.5, 0.3, 0.15], iron: [0.2, 0.2, 0.22], steel: [0.32, 0.32, 0.35],
+  black: [0.1, 0.1, 0.11], brass: [0.78, 0.58, 0.22], olive: [0.27, 0.3, 0.18], oliveD: [0.17, 0.19, 0.12],
+  skin: [0.55, 0.4, 0.3], sleeve: [0.2, 0.13, 0.1],
+};
+// your hand round a grip at g, the sleeve running off the bottom of the screen
+function gripHand(xf, g) {
+  cbox(xf, [g[0], g[1] - 0.055, g[2] + 0.125], [0.045, 0.045, 0.08], GC.sleeve);
+  cbox(xf, [g[0], g[1] - 0.025, g[2] + 0.015], [0.038, 0.042, 0.045], GC.skin);
+}
+// the other hand, under the barrel
+function supportHand(xf, x, y, z) {
+  cbox(xf, [x - 0.07, y - 0.09, z + 0.11], [0.04, 0.04, 0.1], GC.sleeve);
+  cbox(xf, [x - 0.012, y - 0.03, z], [0.034, 0.03, 0.045], GC.skin);
+}
+function gunModel(id, xf, hands, st) {
+  const C = GC;
+  if (id === 'revolver') {
+    if (hands) gripHand(xf, [0, -0.045, 0.035]);
+    cbox(xf, [0, -0.045, 0.035], [0.02, 0.042, 0.026], C.wood);            // grip
+    cbox(xf, [0, 0, -0.02], [0.024, 0.028, 0.075], C.iron);                // frame
+    cbox(xf, [0, 0.002, -0.045], [0.034, 0.034, 0.032], C.steel);          // cylinder
+    for (const s of [-1, 1]) cbox(xf, [s * 0.034, 0.002, -0.045], [0.002, 0.03, 0.008], [0.14, 0.14, 0.16]); // flutes
+    cbox(xf, [0, 0.012, -0.17], [0.015, 0.015, 0.1], C.iron);              // barrel
+    cbox(xf, [0, 0.012, -0.265], [0.02, 0.02, 0.009], C.brass);            // muzzle ring
+    cbox(xf, [0, 0.031, -0.25], [0.004, 0.007, 0.007], C.brass);           // front sight
+    cbox(xf, [0, 0.036, 0.042], [0.007, 0.014, 0.011], C.iron);            // hammer
+    cbox(xf, [0, -0.034, -0.002], [0.007, 0.009, 0.022], C.brass);         // trigger guard
+  } else if (id === 'pistol') {
+    const g = XF.mul(xf, XF.rx(-0.22)); // the grip rakes back
+    if (hands) gripHand(xf, [0, -0.05, 0.04]);
+    cbox(g, [0, -0.045, 0.04], [0.02, 0.045, 0.026], C.black);
+    cbox(g, [0, -0.08, 0.042], [0.016, 0.012, 0.022], C.iron);             // magazine base
+    cbox(xf, [0, -0.004, -0.03], [0.021, 0.016, 0.07], C.black);           // frame
+    cbox(xf, [0, 0.024, -0.03 + st.slide * 0.035], [0.024, 0.016, 0.085], C.steel); // slide
+    for (let k = 0; k < 4; k++) cbox(xf, [0, 0.024, 0.03 + k * 0.012 + st.slide * 0.035], [0.025, 0.012, 0.002], C.iron); // serrations
+    cbox(xf, [0, 0.02, -0.12], [0.009, 0.009, 0.01], C.black);             // barrel tip
+    cbox(xf, [0, 0.043, -0.1 + st.slide * 0.035], [0.003, 0.004, 0.004], C.brass); // front sight
+    cbox(xf, [0, 0.043, 0.045 + st.slide * 0.035], [0.012, 0.004, 0.004], C.black); // rear sight
+    cbox(xf, [0, -0.03, -0.012], [0.006, 0.008, 0.02], C.black);           // trigger guard
+    if (st.mag > 0) cbox(g, [0, -0.06 - st.mag * 0.12, 0.04], [0.016, 0.03, 0.02], C.iron); // the magazine sliding out
+  } else if (id === 'shotgun') {
+    if (hands) { gripHand(xf, [0, -0.05, 0.1]); supportHand(xf, 0, -0.02, -0.17 + st.pump * 0.07); }
+    cbox(xf, [0, -0.035, 0.24], [0.028, 0.05, 0.1], C.wood);               // stock
+    cbox(XF.mul(xf, XF.rx(-0.3)), [0, -0.04, 0.1], [0.018, 0.04, 0.025], C.wood); // grip
+    cbox(xf, [0, 0, 0.03], [0.03, 0.034, 0.085], C.iron);                  // receiver
+    cbox(xf, [0, 0.018, -0.26], [0.016, 0.016, 0.2], C.steel);             // barrel
+    cbox(xf, [0, -0.016, -0.22], [0.013, 0.013, 0.16], C.iron);            // magazine tube
+    cbox(xf, [0, -0.018, -0.17 + st.pump * 0.07], [0.023, 0.022, 0.06], C.woodL); // pump
+    for (let k = 0; k < 4; k++) cbox(xf, [0, -0.018, -0.21 + k * 0.026 + st.pump * 0.07], [0.024, 0.023, 0.003], C.wood);
+    cbox(xf, [0, 0.036, -0.45], [0.004, 0.004, 0.004], C.brass);           // bead
+    cbox(xf, [0, 0.018, -0.465], [0.019, 0.019, 0.006], C.black);          // muzzle
+    cbox(xf, [0.031, 0.008, 0.03 - st.pump * 0.03], [0.002, 0.012, 0.03], C.black); // ejection port
+  } else if (id === 'ak47') {
+    if (hands) { gripHand(xf, [0, -0.06, 0.08]); supportHand(xf, 0, -0.01, -0.18); }
+    cbox(xf, [0, -0.025, 0.23], [0.025, 0.042, 0.1], C.wood);              // stock
+    cbox(XF.mul(xf, XF.rx(-0.3)), [0, -0.055, 0.075], [0.017, 0.04, 0.022], C.black); // grip
+    cbox(xf, [0, 0.003, 0.02], [0.029, 0.033, 0.11], C.iron);              // receiver
+    cbox(xf, [0, 0.04, 0.02], [0.025, 0.007, 0.1], C.steel);               // dust cover
+    cbox(xf, [0.03, 0.02, 0.0], [0.004, 0.006, 0.02], C.steel);            // charging handle
+    cbox(xf, [0, 0.005, -0.18], [0.026, 0.03, 0.07], C.woodL);             // handguard
+    cbox(xf, [0, 0.036, -0.17], [0.01, 0.01, 0.08], C.steel);              // gas tube
+    cbox(xf, [0, 0.012, -0.33], [0.009, 0.009, 0.1], C.black);             // barrel
+    cbox(xf, [0, 0.05, -0.36], [0.004, 0.018, 0.006], C.black);            // front sight post
+    cbox(xf, [0, 0.012, -0.44], [0.012, 0.012, 0.014], C.black);           // muzzle brake
+    // the curved magazine: two segments, each tilted a little further forward; it drops out during a reload
+    const m = XF.chain(xf, XF.t(0, -0.03 - st.mag * 0.16, -0.06 + st.mag * 0.02), XF.rx(0.2 - st.mag * 0.4));
+    cbox(m, [0, -0.045, 0], [0.017, 0.045, 0.03], [0.55, 0.3, 0.12]);
+    cbox(XF.chain(m, XF.t(0, -0.088, 0), XF.rx(0.35)), [0, -0.035, 0.005], [0.017, 0.035, 0.03], [0.5, 0.27, 0.11]);
+  } else if (id === 'sniper') {
+    if (hands) { gripHand(xf, [0, -0.055, 0.1]); supportHand(xf, 0, -0.02, -0.16); }
+    cbox(xf, [0, -0.03, 0.23], [0.027, 0.048, 0.11], C.oliveD);            // stock
+    cbox(xf, [0, 0.02, 0.24], [0.02, 0.012, 0.08], C.oliveD);              // cheek rest
+    cbox(XF.mul(xf, XF.rx(-0.3)), [0, -0.045, 0.1], [0.018, 0.04, 0.024], C.oliveD); // grip
+    cbox(xf, [0, 0.0, -0.03], [0.027, 0.03, 0.14], C.olive);               // body
+    cbox(xf, [0, 0.012, -0.38], [0.01, 0.01, 0.22], C.black);              // barrel
+    cbox(xf, [0, 0.012, -0.61], [0.016, 0.016, 0.022], C.black);           // muzzle brake
+    // scope
+    cbox(xf, [0, 0.07, -0.04], [0.019, 0.019, 0.12], C.black);
+    cbox(xf, [0, 0.07, -0.165], [0.026, 0.026, 0.022], C.black);
+    cbox(xf, [0, 0.07, 0.085], [0.023, 0.023, 0.02], C.black);
+    cbox(xf, [0, 0.07, -0.188], [0.02, 0.02, 0.002], [0.3, 0.55, 0.8], 0.6); // lens glint
+    cbox(xf, [0, 0.096, -0.04], [0.008, 0.008, 0.012], C.iron);            // turret
+    for (const z of [-0.09, 0.03]) cbox(xf, [0, 0.042, z], [0.012, 0.01, 0.012], C.iron); // rings
+    // the bolt: lifts, draws back and slams home after each shot
+    const lift = Math.min(1, st.bolt * 3) * (1 - clamp01(st.bolt * 3 - 2)), back = Math.sin(Math.PI * clamp01(st.bolt * 1.6 - 0.2));
+    const b = XF.chain(xf, XF.t(0.027, 0.016, 0.06 + back * 0.06), XF.rz(lift * 1.1));
+    cbox(b, [0.03, 0, 0], [0.03, 0.005, 0.005], C.steel);
+    cbox(b, [0.062, 0, 0], [0.011, 0.011, 0.011], C.black);
+  } else if (id === 'rpg') {
+    if (hands) { gripHand(xf, [0, -0.085, 0.02]); supportHand(xf, 0, -0.055, -0.15); }
+    cbox(xf, [0, 0, -0.03], [0.045, 0.045, 0.32], C.olive);                // tube
+    cbox(XF.mul(xf, XF.rz(Math.PI / 4)), [0, 0, -0.03], [0.043, 0.043, 0.3], C.olive); // rounding it off
+    cbox(xf, [0, 0, 0.3], [0.056, 0.056, 0.03], C.oliveD);                 // rear flare
+    cbox(xf, [0, 0, -0.35], [0.05, 0.05, 0.016], C.oliveD);                // front ring
+    cbox(xf, [0, 0, -0.08], [0.05, 0.05, 0.035], C.oliveD);                // heat shield band
+    cbox(xf, [0, -0.07, 0.02], [0.014, 0.035, 0.018], C.black);            // trigger grip
+    cbox(xf, [0, -0.065, -0.15], [0.013, 0.03, 0.016], C.black);           // fore grip
+    cbox(xf, [-0.05, 0.055, -0.1], [0.006, 0.022, 0.012], C.black);       // sight
+    if (st.loaded) { // the warhead sitting in the muzzle
+      cbox(xf, [0, 0, -0.39], [0.042, 0.042, 0.03], [0.32, 0.36, 0.22]);
+      cbox(xf, [0, 0, -0.44], [0.032, 0.032, 0.025], [0.32, 0.36, 0.22]);
+      cbox(xf, [0, 0, -0.48], [0.02, 0.02, 0.02], [0.28, 0.32, 0.2]);
+      cbox(xf, [0, 0, -0.51], [0.008, 0.008, 0.014], C.steel);
+    }
+  }
+}
+const IDLE_GUN = { pump: 0, bolt: 0, mag: 0, slide: 0, loaded: true };
+// where each gun sits in your view: [x, y, z, yaw]
+const GUN_POSE = {
+  revolver: [0.15, -0.15, -0.36, 0.1], pistol: [0.15, -0.15, -0.36, 0.1], shotgun: [0.15, -0.165, -0.46, 0.06],
+  ak47: [0.15, -0.16, -0.46, 0.06], sniper: [0.15, -0.16, -0.46, 0.05], rpg: [0.18, -0.13, -0.42, 0.05],
+};
+function gunState(id) {
+  const rp = reloadT > 0 ? 1 - reloadT / gun.reload : 0;
+  const act = gun.action && actionT > 0 ? 1 - actionT / gun.action : 0;
+  return {
+    pump: id === 'shotgun' ? Math.sin(Math.PI * clamp01((act - 0.15) / 0.7)) : 0,
+    bolt: id === 'sniper' ? clamp01((act - 0.1) / 0.85) : 0,
+    mag: id === 'ak47' || id === 'pistol' ? Math.sin(Math.PI * clamp01((rp - 0.15) / 0.6)) : 0,
+    slide: id === 'pistol' ? (ammo === 0 && reloadT === 0 ? 1 : clamp01(recoil * 1.5)) : 0,
+    loaded: id === 'rpg' ? ammo > 0 || rp > 0.6 : true,
+  };
+}
+// your gun, built in view space (x right, y up, looking down -z)
 function buildGun() {
   EM.v.length = 0; EM.i.length = 0;
   E.L = getL(Math.floor(P.x), Math.floor(P.y + P.eye), Math.floor(P.z)) / 15; E.flash = false;
   const hs = Math.min(1, Math.hypot(P.vx, P.vz) / 4.3) * (P.onGround && OPT.motion ? 1 : 0);
   const bx = Math.cos(gunBob) * 0.006 * hs, by = -Math.abs(Math.sin(gunBob)) * 0.008 * hs;
-  const rp = reloadT > 0 ? 1 - reloadT / GUN.reload : 0, dip = Math.sin(Math.PI * rp);
+  const rp = reloadT > 0 ? 1 - reloadT / gun.reload : 0, dip = Math.sin(Math.PI * rp);
   const drop = state === 'dying' ? clamp01(deathT / 0.6) ** 2 : 0; // the gun slips from your hand as you fall
+  const eq = ease(equipT / EQUIP);                                   // a new gun comes up from below
+  const rc = Math.min(recoil, 2), [px, py, pz, pyaw] = GUN_POSE[weapon];
   const xf = XF.chain(
-    XF.t(0.15 + bx + 0.1 * drop, -0.15 + by - 0.05 * gunSprint - 0.1 * dip - 0.55 * drop, -0.36 + 0.04 * recoil),
-    XF.ry(0.1),
-    XF.rx(0.22 * recoil - 0.4 * gunSprint + 0.35 * dip - 1.1 * drop),
+    XF.t(px + bx + 0.1 * drop, py + by - 0.05 * gunSprint - 0.1 * dip - 0.55 * drop - 0.3 * eq, pz + 0.04 * rc),
+    XF.ry(pyaw),
+    XF.rx(0.22 * rc - 0.4 * gunSprint + 0.35 * dip - 1.1 * drop - 0.9 * eq),
     XF.rz(0.8 * dip));
-  const wood = [0.36, 0.2, 0.1], iron = [0.2, 0.2, 0.22], steel = [0.32, 0.32, 0.35], brass = [0.78, 0.58, 0.22];
-  cbox(xf, [0, -0.1, 0.16], [0.045, 0.045, 0.08], [0.2, 0.13, 0.1]);  // sleeve (runs off the bottom of the screen)
-  cbox(xf, [0, -0.07, 0.05], [0.038, 0.042, 0.045], [0.55, 0.4, 0.3]); // hand
-  cbox(xf, [0, -0.045, 0.035], [0.02, 0.042, 0.026], wood);           // grip
-  cbox(xf, [0, 0, -0.02], [0.024, 0.028, 0.075], iron);               // frame
-  cbox(xf, [0, 0.002, -0.045], [0.034, 0.034, 0.032], steel);         // cylinder
-  for (const s of [-1, 1]) cbox(xf, [s * 0.034, 0.002, -0.045], [0.002, 0.03, 0.008], [0.14, 0.14, 0.16]); // flutes
-  cbox(xf, [0, 0.012, -0.17], [0.015, 0.015, 0.1], iron);             // barrel
-  cbox(xf, [0, 0.012, -0.265], [0.02, 0.02, 0.009], brass);           // muzzle ring
-  cbox(xf, [0, 0.031, -0.25], [0.004, 0.007, 0.007], brass);          // front sight
-  cbox(xf, [0, 0.036, 0.042], [0.007, 0.014, 0.011], iron);           // hammer
-  cbox(xf, [0, -0.034, -0.002], [0.007, 0.009, 0.022], brass);        // trigger guard
+  gunModel(weapon, xf, true, gunState(weapon));
   if (muzzleT > 0) {
-    const k = muzzleT / 0.07, m = XF.mul(XF.mul(xf, XF.t(0, 0.012, -0.3)), XF.rz(muzzleRot));
+    const k = muzzleT / 0.07, big = weapon === 'shotgun' || weapon === 'sniper' ? 1.6 : weapon === 'pistol' ? 0.75 : 1;
+    const m = XF.mul(XF.mul(xf, XF.t(0, weapon === 'rpg' ? 0 : 0.012, gun.muzzle)), XF.rz(muzzleRot));
     const c = [1, 0.85, 0.5];
-    ebox(m, -0.08 * k, -0.012, -0.03, 0.08 * k, 0.012, 0.03, c, 1);
-    ebox(m, -0.012, -0.08 * k, -0.03, 0.012, 0.08 * k, 0.03, c, 1);
-    ebox(m, -0.03, -0.03, -0.12 * k, 0.03, 0.03, 0.02, [1, 0.95, 0.8], 1);
+    ebox(m, -0.08 * k * big, -0.012, -0.03, 0.08 * k * big, 0.012, 0.03, c, 1);
+    ebox(m, -0.012, -0.08 * k * big, -0.03, 0.012, 0.08 * k * big, 0.03, c, 1);
+    ebox(m, -0.03, -0.03, -0.12 * k * big, 0.03, 0.03, 0.02, [1, 0.95, 0.8], 1);
+    if (weapon === 'rpg') { // backblast out of the rear of the tube
+      const bb = XF.mul(xf, XF.t(0, 0, 0.36));
+      ebox(bb, -0.07 * k, -0.07 * k, 0, 0.07 * k, 0.07 * k, 0.25 * k, [1, 0.7, 0.35], 1);
+    }
   }
 }
 
@@ -2449,7 +3070,7 @@ function render() {
     : { pos: eyePos(), yaw: P.yaw, pitch: P.pitch, roll: state === 'dying' || state === 'dead' ? deathRoll() : 0 };
   const cam = view.pos;
   const aspect = canvas.width / canvas.height;
-  const proj = M4.persp(OPT.fov * Math.PI / 180, aspect, 0.05, 200);
+  const proj = M4.persp(lerp(OPT.fov, 22, ease(aimK)) * Math.PI / 180, aspect, 0.05, 200); // the scope narrows the view
   const vp = M4.mul(proj, M4.view(cam, view.yaw, view.pitch, view.roll));
   const { r, u, f } = M4.basis(view.yaw, view.pitch, view.roll);
   // the lantern stays in your hand; in the ending it hangs back so the hall reads by its own light
@@ -2467,6 +3088,8 @@ function render() {
   }
   if (bossAlive()) lights.push([boss.x, boss.y + 2.4, boss.z, 0.9, 1, 0.45, 0.12]);
   for (const p of pickups) lights.push([p.x, p.y, p.z, 0.5, 1, 0.2, 0.25]);
+  for (const r of rockets) lights.push([r.x, r.y, r.z, 1.6, 1, 0.6, 0.25]);
+  for (const c of chests) if (c.opened && c.t < 6) lights.push([c.x, FY + 1.8, c.z, 1.2 * Math.min(1, c.t * 3) * (1 - Math.max(0, c.t - 3) / 3), 1, 0.75, 0.35]);
   const d2 = l => (l[0] - cam[0]) ** 2 + (l[1] - cam[1]) ** 2 + (l[2] - cam[2]) ** 2;
   lights.sort((a, b) => d2(a) - d2(b));
 
@@ -2521,6 +3144,8 @@ function render() {
   for (const b of fireballs) halo(b.x, b.y, b.z, b.acid ? 0.7 : 1.0, 0, b.acid ? [0.4, 0.9, 0.15] : [1, 0.5, 0.15]);
   for (const b of blasts) halo(b.x, b.y, b.z, 3.5 * b.t / 0.4 + 0.5, 0, [1, 0.55, 0.2]);
   for (const p of pickups) halo(p.x, p.y, p.z, 0.6, p.t, [1, 0.2, 0.3]);
+  for (const r of rockets) halo(r.x - r.d[0] * 0.25, r.y - r.d[1] * 0.25, r.z - r.d[2] * 0.25, 0.6, 0, [1, 0.55, 0.2]);
+  for (const c of chests) if (c.gun && c.opened) halo(c.x, FY + 2.0, c.z, 0.9, 0, [0.9, 0.7, 0.35]);
   if (exitPos) halo(exitPos[0] + 0.5, FY + 2.5, exitPos[1] + 0.5, 2.2 * (1 + portalBoost), 0,
     bossAlive() ? [0.6, 0.1, 0.05] : mix3([0.6, 0.35, 1], [1, 0.85, 0.6], portalBoost));
   if (v.length) {
@@ -2537,7 +3162,7 @@ function render() {
   }
 
   // the gun, on top of everything, with its own narrower lens
-  if (state === 'play' || (state === 'dying' && deathT < 0.7)) {
+  if ((state === 'play' && aimK < 0.6) || (state === 'dying' && deathT < 0.7)) { // (through the scope you see no gun)
     gl.clear(gl.DEPTH_BUFFER_BIT);
     buildGun();
     gl.useProgram(entProg.p);
@@ -2572,6 +3197,8 @@ function step(dt) {
   }
   for (let k = enemies.length - 1; k >= 0; k--) if (enemies[k].dead && enemies[k].deadT > 1 && enemies[k] !== boss) enemies.splice(k, 1);
   updateFireballs(dt);
+  updateRockets(dt);
+  updateChests(dt);
   if (state === 'play') updatePools(dt);
   for (let k = blasts.length - 1; k >= 0; k--) if ((blasts[k].t -= dt) <= 0) blasts.splice(k, 1);
   updatePickups(dt);
@@ -2625,6 +3252,10 @@ async function start() {
   gunMesh = makeMesh([[0, 3], [1, 3], [2, 3], [3, 2]]);
 
   resize();
+  if (SAVE) { // pick up where you left off
+    gold = SAVE.gold | 0; kills = SAVE.kills | 0; totalTime = +SAVE.time || 0;
+    weapon = WEAPONS[SAVE.weapon] ? SAVE.weapon : 'revolver';
+  }
   loadLevel(START_LEVEL);
   ready = true;
   setState('menu');
@@ -2632,3 +3263,7 @@ async function start() {
   requestAnimationFrame(frame);
 }
 start();
+
+</script>
+</body>
+</html>

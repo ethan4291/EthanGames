@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MinePlace</title>
+<style>
+  /* One texture pixel = 3 CSS pixels everywhere, so textures and the pixel font stay razor sharp. */
+  :root {
+    /* filled in by main.js with pixel-perfect enlargements of img/*.png */
+    --tex-grass: linear-gradient(#5d9a35, #5d9a35);
+    --tex-cobble: linear-gradient(#6b6b6b, #6b6b6b);
+    --tex-cobble-big: linear-gradient(#6b6b6b, #6b6b6b);
+    --font: "MinePixel", ui-monospace, Menlo, Consolas, monospace;
+    --txt: #ffffff; --shadow: #3a3a3a; --hi: #ffff7a; --accent: #b6ef6f;
+    --bevel: inset 3px 3px 0 rgba(255,255,255,.28), inset -3px -3px 0 rgba(0,0,0,.45);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #000; color: var(--txt);
+    font-family: var(--font); font-size: 16px; line-height: 1.25; user-select: none; -webkit-user-select: none;
+    -webkit-font-smoothing: none; -moz-osx-font-smoothing: unset; font-smooth: never; text-rendering: optimizeSpeed; }
+  html, .px { image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; image-rendering: pixelated; }
+  #gl { position: fixed; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; outline: none; }
+  #vignette { position: fixed; inset: 0; pointer-events: none; z-index: 1;
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,.6) 100%); transition: opacity .8s; }
+  body.playing #vignette { opacity: .45; }
+  #fade { position: fixed; inset: 0; background: #000; pointer-events: none; opacity: 1; z-index: 3; transition: opacity 1.2s ease; }
+  #flash { position: fixed; inset: 0; background: #fff; pointer-events: none; opacity: 0; z-index: 2; }
+  #flash.go { animation: flash .5s ease-out; }
+  @keyframes flash { 0% { opacity: .55; } 100% { opacity: 0; } }
+
+  /* ---------- shared "block" look ---------- */
+  .stone { background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)), var(--tex-cobble) 0 0 / 48px 48px;
+    border: 3px solid #000; box-shadow: var(--bevel), 0 6px 0 rgba(0,0,0,.55); }
+  .txt { text-shadow: 3px 3px 0 var(--shadow); }
+
+  /* ---------- HUD ---------- */
+  #hud { position: fixed; inset: 0; pointer-events: none; z-index: 2; opacity: 0; transition: opacity .5s; }
+  #hud.show { opacity: 1; }
+  #crosshair { position: absolute; left: 50%; top: 50%; width: 21px; height: 21px; margin: -10px 0 0 -10px; mix-blend-mode: difference; transition: transform .08s; }
+  #crosshair::before, #crosshair::after { content: ""; position: absolute; background: #fff; }
+  #crosshair::before { left: 9px; top: 0; width: 3px; height: 21px; }
+  #crosshair::after { top: 9px; left: 0; height: 3px; width: 21px; }
+  #crosshair.pulse { animation: chpulse .18s steps(3); }
+  @keyframes chpulse { 0% { transform: scale(1.43); } 100% { transform: scale(1); } }
+  #hotbar { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); display: flex; gap: 6px; padding: 6px; }
+  .slot { position: relative; width: 66px; height: 66px; display: grid; place-items: center;
+    background: rgba(0,0,0,.45); border: 3px solid #000; box-shadow: inset 3px 3px 0 rgba(255,255,255,.12), inset -3px -3px 0 rgba(0,0,0,.4); }
+  .slot img { width: 48px; height: 48px; filter: drop-shadow(0 3px 0 rgba(0,0,0,.5)); }
+  .slot span { position: absolute; left: 4px; top: 1px; font-size: 16px; text-shadow: 2px 2px 0 #000; }
+  .slot.sel { border-color: #fff; box-shadow: 0 0 0 3px #000, inset 3px 3px 0 rgba(255,255,255,.25), inset -3px -3px 0 rgba(0,0,0,.4); transform: translateY(-3px); }
+  .slot.bump { animation: bump .24s steps(4); }
+  @keyframes bump { 0% { transform: translateY(-12px); } 100% { transform: translateY(-3px); } }
+  #itemName { position: absolute; left: 50%; bottom: 106px; transform: translateX(-50%); font-size: 24px; opacity: 0; transition: opacity .4s; white-space: nowrap; }
+  #itemName.show { opacity: 1; transition: opacity .1s; }
+  #toast { position: absolute; left: 50%; top: 24px; transform: translate(-50%, -36px); padding: 9px 18px 12px; font-size: 16px;
+    opacity: 0; transition: opacity .2s, transform .25s steps(5); }
+  #toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  /* ---------- Menus ---------- */
+  #menus { position: fixed; inset: 0; z-index: 4; pointer-events: none; }
+  .screen { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s; pointer-events: auto; padding: 16px; }
+  .screen.active { opacity: 1; visibility: visible; }
+  .screen.dim { background: rgba(0,0,0,.55); }
+  #scr-title, #scr-play { justify-content: flex-start; padding-top: 47vh; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  h2 { font-size: 32px; font-weight: normal; }
+  .btns { display: flex; flex-direction: column; align-items: center; }
+  button.mp { display: block; width: min(408px, 86vw); height: 60px; margin: 6px 0; padding: 0 12px; cursor: pointer; position: relative;
+    font: 24px/1 var(--font); color: #fff; text-shadow: 3px 3px 0 var(--shadow);
+    background: linear-gradient(rgba(0,0,0,.22), rgba(0,0,0,.22)), var(--tex-cobble) 0 0 / 48px 48px;
+    border: 3px solid #000; box-shadow: var(--bevel), 0 6px 0 rgba(0,0,0,.55); transition: transform .08s steps(2); }
+  button.mp:hover, button.mp:focus-visible { outline: none; color: var(--hi); transform: translateY(-3px);
+    background: linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,.1)), var(--tex-grass) 0 0 / 48px 48px;
+    box-shadow: var(--bevel), 0 9px 0 rgba(0,0,0,.5); }
+  button.mp:active { transform: translateY(3px); box-shadow: inset 3px 3px 0 rgba(0,0,0,.45), 0 3px 0 rgba(0,0,0,.5); }
+  button.mp.small { width: auto; min-width: 192px; height: 48px; font-size: 16px; }
+  .screen.active .btns > * { animation: rise .42s steps(6) both; }
+  .screen.active .btns > *:nth-child(2) { animation-delay: .05s; }
+  .screen.active .btns > *:nth-child(3) { animation-delay: .1s; }
+  .screen.active .btns > *:nth-child(4) { animation-delay: .15s; }
+  .screen.active .btns > *:nth-child(5) { animation-delay: .2s; }
+  #btnReset.armed { color: #ff7a6a; animation: blink .6s steps(2) infinite; }
+  @keyframes rise { 0% { opacity: 0; transform: translateY(24px); } 100% { opacity: 1; transform: none; } }
+  .note { margin-top: 12px; font-size: 16px; color: var(--hi); text-shadow: 2px 2px 0 #000; min-height: 20px; text-align: center; }
+  .foot { position: absolute; bottom: 12px; left: 14px; font-size: 16px; color: #ddd; text-shadow: 2px 2px 0 #000; }
+
+  /* panels look like a block: a grass top band over cobblestone */
+  .panel { width: min(780px, 94vw); max-height: 90vh; display: flex; flex-direction: column; animation: rise .35s steps(5) both; }
+  .panel > header { flex: none; padding: 12px 18px 15px; text-align: center; border-bottom: 3px solid #000;
+    background: linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.08)), var(--tex-grass) 0 0 / 48px 48px;
+    box-shadow: inset 3px 3px 0 rgba(255,255,255,.3), inset -3px -3px 0 rgba(0,0,0,.35); }
+  .panel > .body { overflow: auto; padding: 18px 21px 21px; }
+  .panel h3 { font-size: 16px; font-weight: normal; color: var(--accent); margin: 6px 0 12px; text-shadow: 2px 2px 0 #000; }
+  .panel h3 + * { margin-bottom: 18px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 9px 24px; }
+  .bind { display: flex; justify-content: space-between; align-items: center; gap: 12px; text-shadow: 2px 2px 0 #000; }
+  .bind button { min-width: 156px; height: 39px; padding: 0 9px; cursor: pointer; font: 16px/1 var(--font); color: #fff; text-shadow: 2px 2px 0 var(--shadow);
+    background: linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,.3)), var(--tex-cobble) 0 0 / 48px 48px; border: 3px solid #000; box-shadow: var(--bevel); }
+  .bind button:hover { color: var(--hi); background: linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,.1)), var(--tex-grass) 0 0 / 48px 48px; }
+  .bind button.listening { color: var(--hi); animation: blink .6s steps(2) infinite; }
+  @keyframes blink { 50% { color: #fff; } }
+  .opt { display: flex; flex-direction: column; gap: 6px; text-shadow: 2px 2px 0 #000; }
+  .opt label { display: flex; justify-content: space-between; }
+  .opt label b { font-weight: normal; color: var(--accent); }
+  .toggles { display: flex; gap: 12px; flex-wrap: wrap; }
+  .toggles button.mp { flex: 1; margin: 0; }
+  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 21px; cursor: pointer;
+    background: #111; border: 3px solid #000; box-shadow: inset 3px 3px 0 rgba(0,0,0,.6), inset -3px -3px 0 rgba(255,255,255,.08); }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 33px; border: 3px solid #000;
+    background: var(--tex-grass) 0 0 / 48px 48px; box-shadow: inset 3px 3px 0 rgba(255,255,255,.35), inset -3px -3px 0 rgba(0,0,0,.35); }
+  input[type=range]::-moz-range-thumb { width: 18px; height: 27px; border: 3px solid #000; border-radius: 0; background: var(--tex-grass) 0 0 / 48px 48px; }
+  .row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
+  .row button.mp { margin: 0; }
+
+  /* loading looks like the inside of a cave */
+  #scr-loading { background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)), var(--tex-cobble-big) 0 0 / 96px 96px; }
+  #loadMsg { font-size: 24px; margin-bottom: 18px; text-shadow: 3px 3px 0 #000; }
+  #loadBar { width: min(408px, 80vw); height: 24px; border: 3px solid #000; background: #111; box-shadow: inset 3px 3px 0 rgba(0,0,0,.6); }
+  #loadBar i { display: block; height: 100%; width: 0%; background: var(--tex-grass) 0 0 / 48px 48px; box-shadow: inset 0 3px 0 rgba(255,255,255,.3), inset 0 -3px 0 rgba(0,0,0,.3); }
+  #errorMsg { font-size: 16px; line-height: 1.6; text-shadow: 2px 2px 0 #000; }
+  #errorMsg code { font-family: var(--font); color: var(--hi); }
+  #clickToPlay { position: absolute; inset: 0; display: none; place-items: center; pointer-events: auto; cursor: pointer; background: rgba(0,0,0,.35); }
+  #clickToPlay.show { display: grid; }
+  #clickToPlay div { font-size: 24px; padding: 15px 27px 18px; animation: breathe 1.2s steps(2) infinite; }
+  @keyframes breathe { 50% { transform: translateY(-3px); } }
+</style>
+</head>
+<body>
+<canvas id="gl" tabindex="-1"></canvas>
+<div id="vignette"></div>
+<div id="flash"></div>
+
+<div id="hud">
+  <div id="crosshair"></div>
+  <div id="itemName" class="txt"></div>
+  <div id="hotbar"></div>
+  <div id="toast" class="stone txt"></div>
+</div>
+
+<div id="fade"></div>
+
+<div id="menus">
+  <section class="screen" id="scr-title">
+    <h1 class="sr">MinePlace</h1>
+    <div class="btns">
+      <button class="mp px" data-act="play">Play</button>
+      <button class="mp px" data-act="controls">Controls</button>
+    </div>
+    <div class="foot">MinePlace v1.2</div>
+  </section>
+
+  <section class="screen" id="scr-play">
+    <div class="btns">
+      <button class="mp px" id="btnContinue" data-act="continue">Continue World</button>
+      <button class="mp px" data-act="new-hills">New World: Hills &amp; Caves</button>
+      <button class="mp px" data-act="new-flat">New World: Flat (Classic)</button>
+      <button class="mp px small" data-act="back">Back</button>
+      <button class="mp px small" id="btnReset" data-act="reset-progress">Reset Progress</button>
+    </div>
+    <div class="note" id="playNote"></div>
+  </section>
+
+  <section class="screen dim" id="scr-controls">
+    <div class="panel stone px">
+      <header class="px"><h2 class="txt">Controls</h2></header>
+      <div class="body">
+        <h3>KEYS - click one, then press a key or mouse button</h3>
+        <div class="grid" id="binds"></div>
+        <h3>SETTINGS</h3>
+        <div class="grid">
+          <div class="opt"><label>Mouse Sensitivity <b id="optSensV"></b></label><input class="px" type="range" id="optSens" min="0.2" max="3" step="0.05"></div>
+          <div class="opt"><label>Field of View <b id="optFovV"></b></label><input class="px" type="range" id="optFov" min="50" max="110" step="1"></div>
+          <div class="opt"><label>Render Distance <b id="optDistV"></b></label><input class="px" type="range" id="optDist" min="32" max="256" step="16"></div>
+          <div class="opt"><label>Sound Volume <b id="optVolV"></b></label><input class="px" type="range" id="optVol" min="0" max="100" step="1"></div>
+        </div>
+        <div class="toggles">
+          <button class="mp px small" id="optBob"></button>
+          <button class="mp px small" id="optInv"></button>
+        </div>
+        <div class="row" style="margin-top:21px">
+          <button class="mp px small" data-act="reset-settings">Reset Settings</button>
+          <button class="mp px small" data-act="controls-back">Done</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen dim" id="scr-pause">
+    <h2 class="txt" style="margin-bottom:18px">Paused</h2>
+    <div class="btns">
+      <button class="mp px" data-act="resume">Back to Game</button>
+      <button class="mp px" data-act="controls">Controls</button>
+      <button class="mp px" data-act="quit">Save and Quit to Title</button>
+    </div>
+    <div class="note" id="pauseNote"></div>
+  </section>
+
+  <section class="screen px" id="scr-loading">
+    <div id="loadMsg">Loading...</div>
+    <div id="loadBar" class="px"><i class="px"></i></div>
+  </section>
+
+  <section class="screen dim" id="scr-error">
+    <div class="panel stone px"><header class="px"><h2 class="txt">Oops</h2></header><div class="body" id="errorMsg"></div></div>
+  </section>
+
+  <div id="clickToPlay"><div class="stone txt px">Click to play</div></div>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
